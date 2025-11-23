@@ -54,8 +54,15 @@
     - **Property 36: Agent hooks provide documentation context**
     - **Validates: Requirements 15.4**
 
-- [ ] 4. Implement core window management system
-  - [ ] 4.1 Create Window component with drag and resize functionality
+- [x] 4. Implement core window management system
+
+
+
+
+
+  - [x] 4.1 Create Window component with drag and resize functionality
+
+
     - Build Window component with title bar, controls, and content area
     - Implement drag functionality using react-draggable or custom hooks
     - Implement resize functionality with edge/corner detection
@@ -67,7 +74,9 @@
   - [ ]* 4.3 Write property test for window resizing
     - **Property 2: Window resizing updates dimensions**
     - **Validates: Requirements 2.2**
-  - [ ] 4.4 Create WindowManager context and hooks
+  - [x] 4.4 Create WindowManager context and hooks
+
+
     - Implement WindowManager state management with Context API
     - Create useWindowManager hook for window operations
     - Implement window focus, minimize, close, and restore logic

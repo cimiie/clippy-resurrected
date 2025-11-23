@@ -1,0 +1,140 @@
+.window {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background-color: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  box-shadow: 1px 1px 0 #000000;
+  user-select: none;
+}
+
+.titleBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(to right, #000080, #1084d0);
+  color: #ffffff;
+  padding: 2px 4px;
+  cursor: move;
+  font-family: 'MS Sans Serif', Tahoma, Arial, sans-serif;
+  font-size: 11px;
+  font-weight: bold;
+  height: 18px;
+}
+
+.title {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.controls {
+  display: flex;
+  gap: 2px;
+}
+
+.minimizeButton,
+.closeButton {
+  width: 16px;
+  height: 14px;
+  background-color: #c0c0c0;
+  border: 1px solid;
+  border-color: #ffffff #000000 #000000 #ffffff;
+  cursor: pointer;
+  font-family: 'MS Sans Serif', Tahoma, Arial, sans-serif;
+  font-size: 10px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: #000000;
+}
+
+.minimizeButton:active,
+.closeButton:active {
+  border-color: #000000 #ffffff #ffffff #000000;
+  padding-top: 1px;
+  padding-left: 1px;
+}
+
+.content {
+  flex: 1;
+  overflow: auto;
+  background-color: #ffffff;
+  border: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+  margin: 2px;
+}
+
+/* Resize Handles */
+.resizeHandle {
+  position: absolute;
+  z-index: 10;
+}
+
+.resizeN,
+.resizeS {
+  left: 0;
+  right: 0;
+  height: 4px;
+  cursor: ns-resize;
+}
+
+.resizeN {
+  top: 0;
+}
+
+.resizeS {
+  bottom: 0;
+}
+
+.resizeE,
+.resizeW {
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  cursor: ew-resize;
+}
+
+.resizeE {
+  right: 0;
+}
+
+.resizeW {
+  left: 0;
+}
+
+.resizeNE,
+.resizeNW,
+.resizeSE,
+.resizeSW {
+  width: 8px;
+  height: 8px;
+}
+
+.resizeNE {
+  top: 0;
+  right: 0;
+  cursor: nesw-resize;
+}
+
+.resizeNW {
+  top: 0;
+  left: 0;
+  cursor: nwse-resize;
+}
+
+.resizeSE {
+  bottom: 0;
+  right: 0;
+  cursor: nwse-resize;
+}
+
+.resizeSW {
+  bottom: 0;
+  left: 0;
+  cursor: nesw-resize;
+}
