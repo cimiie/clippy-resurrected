@@ -16,7 +16,7 @@ This design outlines the approach for upgrading the Windows 95 emulator applicat
 
 ### Target Architecture
 - Next.js 16.x with App Router
-- React 18.3.1 (maintained)
+- React 19.x (required by Next.js 16)
 - TypeScript 5.7 (maintained)
 - Turbopack bundler (new default in Next.js 16)
 - React Compiler enabled
@@ -52,8 +52,8 @@ The upgrade will follow a phased approach:
 ```json
 {
   "next": "^16.0.0",
-  "react": "^18.3.1",
-  "react-dom": "^18.3.1",
+  "react": "^19.0.0",
+  "react-dom": "^19.0.0",
   "eslint-config-next": "^16.0.0"
 }
 ```

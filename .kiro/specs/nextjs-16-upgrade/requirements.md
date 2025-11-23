@@ -24,10 +24,10 @@ This document outlines the requirements for upgrading the Windows 95 emulator ap
 #### Acceptance Criteria
 
 1. WHEN the upgrade command is executed, THEN the Application SHALL update Next.js to version 16 and all related dependencies to compatible versions
-2. WHEN the package.json is updated, THEN the Application SHALL maintain compatibility with React 18.3.1 and React-DOM 18.3.1
+2. WHEN the package.json is updated, THEN the Application SHALL upgrade to React 19 and React-DOM 19 as required by Next.js 16
 3. WHEN dependencies are installed, THEN the Application SHALL resolve all peer dependency conflicts successfully
 4. WHEN the upgrade is complete, THEN the Application SHALL have eslint-config-next updated to version 16
-5. WHEN TypeScript types are checked, THEN the Application SHALL have @types/react and @types/react-dom at compatible versions
+5. WHEN TypeScript types are checked, THEN the Application SHALL have @types/react and @types/react-dom at compatible versions for React 19
 
 ### Requirement 2
 
