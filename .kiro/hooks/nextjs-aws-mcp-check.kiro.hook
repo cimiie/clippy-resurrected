@@ -1,0 +1,19 @@
+{
+  "enabled": true,
+  "name": "Next.js/AWS MCP Documentation Check",
+  "description": "When working with Next.js or AWS files, automatically consult MCP documentation servers (Context7 for Next.js and AWS Docs for AWS services) to ensure implementation follows best practices and latest patterns",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "src/app/**/*",
+      "src/services/**/*",
+      "next.config.ts",
+      "src/components/**/*"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Review the changes in this file. If it involves Next.js functionality (App Router, routing, layouts, server components, etc.), consult the Context7 MCP server for Next.js documentation. If it involves AWS services (Bedrock, Amplify, etc.), consult the AWS Docs MCP server. Verify the implementation follows current best practices and suggest improvements if needed."
+  }
+}
