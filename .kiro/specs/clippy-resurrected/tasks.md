@@ -1,0 +1,318 @@
+# Implementation Plan
+
+- [x] 1. Initialize Next.js 16 project with TypeScript and development tooling
+  - Create Next.js 16 project with App Router and TypeScript
+  - Configure tsconfig.json with strict mode enabled
+  - Set up Vitest with TypeScript support and @testing-library/react
+  - Configure vitest.config.ts for React component testing
+  - Set up ESLint with Next.js and TypeScript rules
+  - Configure Prettier for code formatting
+  - Set up Husky with pre-commit hooks for linting, type checking, and running tests
+  - Install and configure commitlint with @commitlint/config-conventional
+  - Create .husky/commit-msg hook for commit message validation
+  - Install React95 and 98.css libraries
+  - _Requirements: 9.1, 9.2, 9.3, 9.4, 9.5, 9.6, 9.7_
+
+- [ ] 2. Configure MCP servers for development and Clippy
+  - Create .kiro/settings/mcp.json with Next.js MCP configuration
+  - Add AWS documentation MCP server configuration for Clippy integration
+  - Configure MCP server environment variables and settings
+  - _Requirements: 12.1, 13.1, 14.3_
+
+- [ ] 3. Set up agent hooks for automatic documentation fetching
+  - [ ] 3.1 Create agent hook for session start documentation fetch
+    - Create .kiro/hooks/fetch-docs-session.json configuration
+    - Configure hook to trigger on session creation
+    - Set up message action to query AWS MCP and Next.js MCP
+    - _Requirements: 15.1, 15.5_
+  - [ ] 3.2 Create agent hook for pre-message documentation update
+    - Create .kiro/hooks/fetch-docs-message.json configuration
+    - Configure hook to trigger on message send
+    - Set up MCP queries for latest AWS and Next.js documentation
+    - _Requirements: 15.2, 15.3, 15.4_
+  - [ ]* 3.3 Write property test for session start hook
+    - **Property 34: Agent hooks fetch documentation on session start**
+    - **Validates: Requirements 15.1**
+  - [ ]* 3.4 Write property test for pre-message hook
+    - **Property 35: Agent hooks execute before message processing**
+    - **Validates: Requirements 15.2**
+  - [ ]* 3.5 Write property test for documentation context
+    - **Property 36: Agent hooks provide documentation context**
+    - **Validates: Requirements 15.4**
+
+- [ ] 4. Implement core window management system
+  - [ ] 4.1 Create Window component with drag and resize functionality
+    - Build Window component with title bar, controls, and content area
+    - Implement drag functionality using react-draggable or custom hooks
+    - Implement resize functionality with edge/corner detection
+    - Apply Windows 95 styling with React95 and 98.css
+    - _Requirements: 2.1, 2.2, 2.5_
+  - [ ]* 4.2 Write property test for window dragging
+    - **Property 1: Window dragging follows cursor**
+    - **Validates: Requirements 2.1**
+  - [ ]* 4.3 Write property test for window resizing
+    - **Property 2: Window resizing updates dimensions**
+    - **Validates: Requirements 2.2**
+  - [ ] 4.4 Create WindowManager context and hooks
+    - Implement WindowManager state management with Context API
+    - Create useWindowManager hook for window operations
+    - Implement window focus, minimize, close, and restore logic
+    - Manage z-index ordering for window layering
+    - _Requirements: 2.3, 2.4_
+  - [ ]* 4.5 Write property test for window closure
+    - **Property 3: Window closure removes from environment**
+    - **Validates: Requirements 2.3**
+  - [ ]* 4.6 Write property test for window minimize
+    - **Property 4: Window minimize creates taskbar entry**
+    - **Validates: Requirements 2.4**
+  - [ ]* 4.7 Write property test for window controls
+    - **Property 5: All windows have required controls**
+    - **Validates: Requirements 2.5**
+
+- [ ] 5. Build desktop environment and icon system
+  - [ ] 5.1 Create DesktopEnvironment component
+    - Build main desktop container with Windows 95 background color
+    - Implement desktop click handling for icon deselection
+    - Set up layout structure for icons and windows
+    - _Requirements: 1.1, 1.5_
+  - [ ] 5.2 Create DesktopIcon component
+    - Build icon component with image, label, and selection state
+    - Implement single-click selection and double-click launch
+    - Apply Windows 95 icon styling
+    - Create grid layout system for icon positioning
+    - _Requirements: 10.1, 10.2, 10.3, 10.4, 10.5_
+  - [ ]* 5.3 Write property test for icon selection
+    - **Property 23: Desktop icon single-click selects**
+    - **Validates: Requirements 10.1**
+  - [ ]* 5.4 Write property test for icon launch
+    - **Property 24: Desktop icon double-click launches app**
+    - **Validates: Requirements 10.2**
+  - [ ]* 5.5 Write property test for icon deselection
+    - **Property 25: Outside click deselects icon**
+    - **Validates: Requirements 10.3**
+  - [ ]* 5.6 Write property test for icon grid layout
+    - **Property 26: Icons arrange in grid layout**
+    - **Validates: Requirements 10.4**
+  - [ ]* 5.7 Write property test for icon rendering
+    - **Property 27: Icons display image and label**
+    - **Validates: Requirements 10.5**
+  - [ ] 5.8 Create default desktop icons (My Computer, Recycle Bin, Internet Explorer)
+    - Add icon assets and configure default icon set
+    - Wire up icon actions to launch corresponding applications
+    - _Requirements: 1.5, 7.1_
+
+- [ ] 6. Implement taskbar and start menu
+  - [ ] 6.1 Create Taskbar component
+    - Build taskbar container with Windows 95 styling
+    - Implement Start button with click handling
+    - Create window button indicators with click-to-focus functionality
+    - Add system tray area for clock
+    - _Requirements: 1.2, 8.1, 8.2, 8.3, 8.4, 8.5_
+  - [ ]* 6.2 Write property test for taskbar button creation
+    - **Property 18: Window opening creates taskbar button**
+    - **Validates: Requirements 8.1**
+  - [ ]* 6.3 Write property test for taskbar button focus
+    - **Property 19: Taskbar button click focuses window**
+    - **Validates: Requirements 8.2**
+  - [ ]* 6.4 Write property test for taskbar button removal
+    - **Property 20: Window closure removes taskbar button**
+    - **Validates: Requirements 8.3**
+  - [ ]* 6.5 Write property test for minimized window buttons
+    - **Property 21: Minimized windows keep taskbar buttons**
+    - **Validates: Requirements 8.4**
+  - [ ]* 6.6 Write property test for taskbar window order
+    - **Property 22: Taskbar maintains window order**
+    - **Validates: Requirements 8.5**
+  - [ ] 6.7 Create Clock component
+    - Implement time display in HH:MM format
+    - Add interval to update time every minute
+    - Use local timezone for time display
+    - Add click handler for date/time tooltip
+    - _Requirements: 11.1, 11.2, 11.3, 11.4_
+  - [ ]* 6.8 Write property test for clock timezone
+    - **Property 28: Clock uses local timezone**
+    - **Validates: Requirements 11.4**
+  - [ ] 6.9 Create StartMenu component
+    - Build hierarchical menu structure with nested items
+    - Implement hover-to-expand for sub-menus
+    - Add outside-click detection to close menu
+    - Style with Windows 95 menu aesthetics
+    - Configure menu items for applications
+    - _Requirements: 3.1, 3.2, 3.3, 3.4_
+  - [ ]* 6.10 Write property test for start menu outside click
+    - **Property 6: Start menu closes on outside click**
+    - **Validates: Requirements 3.2**
+  - [ ]* 6.11 Write property test for submenu display
+    - **Property 7: Menu items with sub-items show submenus on hover**
+    - **Validates: Requirements 3.3**
+  - [ ]* 6.12 Write property test for application launch from menu
+    - **Property 8: Application menu items launch windows**
+    - **Validates: Requirements 3.4**
+
+- [ ] 7. Checkpoint - Ensure all tests pass
+  - Ensure all tests pass, ask the user if questions arise.
+
+- [ ] 8. Build Minesweeper application
+  - [ ] 8.1 Create Minesweeper game logic
+    - Implement grid generation with random mine placement
+    - Create cell reveal logic with cascade for empty cells
+    - Implement flag toggle functionality
+    - Add win/loss condition detection
+    - Create game state management (playing, won, lost)
+    - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5_
+  - [ ]* 8.2 Write property test for cell reveal
+    - **Property 9: Cell reveal shows mine count or triggers game over**
+    - **Validates: Requirements 4.2**
+  - [ ]* 8.3 Write property test for flag toggle
+    - **Property 10: Right-click toggles flag state**
+    - **Validates: Requirements 4.3**
+  - [ ]* 8.4 Write property test for mine click
+    - **Property 11: Clicking mine reveals all mines**
+    - **Validates: Requirements 4.5**
+  - [ ] 8.5 Create MinesweeperApp UI component
+    - Build game grid UI with cells
+    - Add game controls (reset, difficulty selector)
+    - Display mine counter and timer
+    - Style with Windows 95 aesthetics
+    - Wire up to window system for launching
+    - _Requirements: 4.1_
+
+- [ ] 9. Implement AWS Bedrock integration for Clippy
+  - [ ] 9.1 Create AWS Bedrock service module
+    - Set up AWS SDK for Bedrock
+    - Implement generateResponse function with token limits
+    - Add error handling for API failures and rate limiting
+    - Configure model selection (Claude or similar)
+    - _Requirements: 5.3, 5.4_
+  - [ ] 9.2 Create MCP service module for AWS documentation
+    - Implement MCP client for AWS documentation queries
+    - Create queryDocumentation and getServiceInfo functions
+    - Add caching for documentation results
+    - Handle MCP connection failures gracefully
+    - _Requirements: 14.1, 14.4, 14.5_
+  - [ ]* 9.3 Write property test for Clippy LLM invocation
+    - **Property 12: Clippy queries invoke LLM service**
+    - **Validates: Requirements 5.3**
+  - [ ]* 9.4 Write property test for token limit enforcement
+    - **Property 13: Token limits apply to all requests**
+    - **Validates: Requirements 5.4**
+  - [ ]* 9.5 Write property test for AWS MCP queries
+    - **Property 29: AWS questions query MCP server**
+    - **Validates: Requirements 14.1**
+  - [ ]* 9.6 Write property test for MCP documentation retrieval
+    - **Property 30: Documentation queries use MCP integration**
+    - **Validates: Requirements 14.4**
+  - [ ]* 9.7 Write property test for LLM context inclusion
+    - **Property 31: LLM prompts include MCP documentation**
+    - **Validates: Requirements 14.5**
+
+- [ ] 10. Build Clippy assistant UI and token controller
+  - [ ] 10.1 Create ClippyAssistant component
+    - Build animated Clippy character with idle animations
+    - Implement chat interface with message history
+    - Add click handler to open/close chat
+    - Create message submission and response display
+    - Integrate with Bedrock and MCP services
+    - Show typing indicator during response generation
+    - _Requirements: 5.1, 5.2, 5.3, 5.5_
+  - [ ] 10.2 Create TokenController component
+    - Build settings UI for token limits and response length
+    - Display current usage statistics
+    - Implement warning display at threshold
+    - Add request blocking when limit exceeded
+    - Persist settings to localStorage
+    - _Requirements: 6.1, 6.2, 6.3, 6.4, 6.5_
+  - [ ]* 10.3 Write property test for token limit updates
+    - **Property 14: Token limit changes affect subsequent requests**
+    - **Validates: Requirements 6.2**
+  - [ ]* 10.4 Write property test for response length constraints
+    - **Property 15: Response length settings constrain LLM**
+    - **Validates: Requirements 6.3**
+  - [ ]* 10.5 Write property test for request blocking
+    - **Property 16: Exceeded limits block new requests**
+    - **Validates: Requirements 6.5**
+
+- [ ] 11. Create mock Internet Explorer browser
+  - [ ] 11.1 Create MockBrowser component
+    - Build browser window with address bar and navigation buttons
+    - Implement navigation state (URL, history, back/forward)
+    - Create AWS-themed content pages with Windows 95 styling
+    - Add navigation button handlers (back, forward, refresh)
+    - Integrate Clippy for contextual AWS help
+    - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5_
+  - [ ]* 11.2 Write property test for browser navigation
+    - **Property 17: Browser navigation buttons update state**
+    - **Validates: Requirements 7.4**
+
+- [ ] 12. Apply Windows 95 styling and theming
+  - [ ] 12.1 Create global styles and theme configuration
+    - Set up CSS modules for component styling
+    - Define Windows 95 color palette variables
+    - Configure font fallback chain (MS Sans Serif, Tahoma, Arial)
+    - Apply 3D button effects with box-shadow
+    - Ensure consistent styling across all components
+    - _Requirements: 1.3, 1.4_
+  - [ ]* 12.2 Write property test for color palette usage
+    - **Property 32: UI elements use Windows 95 color palette**
+    - **Validates: Requirements 1.3**
+  - [ ]* 12.3 Write property test for font family
+    - **Property 33: Text elements use correct font family**
+    - **Validates: Requirements 1.4**
+
+- [ ] 13. Integrate all components and create main application
+  - [ ] 13.1 Create main page component
+    - Set up App Router page with DesktopEnvironment
+    - Initialize WindowManager context
+    - Add all desktop icons with proper actions
+    - Include Taskbar and ClippyAssistant
+    - Configure initial application state
+    - _Requirements: 1.1, 1.2, 1.5_
+  - [ ] 13.2 Add error boundaries
+    - Implement React Error Boundaries for major components
+    - Create Windows 95-styled error dialog
+    - Add error logging and recovery actions
+    - _Requirements: Error Handling section_
+  - [ ] 13.3 Implement environment variable configuration
+    - Set up .env.local for AWS credentials
+    - Configure Bedrock endpoint and model settings
+    - Add MCP server configuration
+    - Document required environment variables
+    - _Requirements: 5.3, 14.1_
+
+- [ ] 14. Configure AWS Amplify deployment
+  - [ ] 14.1 Create Amplify configuration files
+    - Create amplify.yml with build and test commands
+    - Configure build phases (preBuild, build, postBuild)
+    - Set up artifact output directory (.next)
+    - Configure cache paths for node_modules
+    - _Requirements: 16.1_
+  - [ ] 14.2 Set up environment variables for Amplify
+    - Document required environment variables in README
+    - Create .env.example with placeholder values
+    - List AWS credentials and Bedrock configuration needed
+    - Document NEXT_PUBLIC_ variables for client-side access
+    - _Requirements: 16.4_
+  - [ ] 14.3 Configure Amplify build settings
+    - Set up automatic deployments on git push
+    - Configure test execution before deployment
+    - Enable build failure notifications
+    - Set up preview deployments for pull requests
+    - _Requirements: 16.2, 16.3, 16.6_
+  - [ ]* 14.4 Write property test for build test execution
+    - **Property 37: Amplify builds run all tests before deployment**
+    - **Validates: Requirements 16.3**
+  - [ ]* 14.5 Write property test for environment variable security
+    - **Property 38: Environment variables are injected securely**
+    - **Validates: Requirements 16.4**
+  - [ ]* 14.6 Write property test for build failure handling
+    - **Property 39: Build failures prevent deployment**
+    - **Validates: Requirements 16.6**
+  - [ ] 14.7 Create deployment documentation
+    - Document Amplify setup steps
+    - Create deployment checklist
+    - Document rollback procedures
+    - Add monitoring and logging instructions
+    - _Requirements: 16.1, 16.5_
+
+- [ ] 15. Final checkpoint - Ensure all tests pass
+  - Ensure all tests pass, ask the user if questions arise.
