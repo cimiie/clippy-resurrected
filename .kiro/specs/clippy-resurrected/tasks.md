@@ -13,19 +13,33 @@
   - Install React95 and 98.css libraries
   - _Requirements: 9.1, 9.2, 9.3, 9.4, 9.5, 9.6, 9.7_
 
-- [ ] 2. Configure MCP servers for development and Clippy
+- [x] 2. Configure MCP servers for development and Clippy
+
+
+
+
+
   - Create .kiro/settings/mcp.json with Next.js MCP configuration
   - Add AWS documentation MCP server configuration for Clippy integration
   - Configure MCP server environment variables and settings
   - _Requirements: 12.1, 13.1, 14.3_
 
-- [ ] 3. Set up agent hooks for automatic documentation fetching
-  - [ ] 3.1 Create agent hook for session start documentation fetch
+- [x] 3. Set up agent hooks for automatic documentation fetching
+
+
+
+
+
+
+  - [x] 3.1 Create agent hook for session start documentation fetch
+
     - Create .kiro/hooks/fetch-docs-session.json configuration
     - Configure hook to trigger on session creation
     - Set up message action to query AWS MCP and Next.js MCP
     - _Requirements: 15.1, 15.5_
-  - [ ] 3.2 Create agent hook for pre-message documentation update
+  - [x] 3.2 Create agent hook for pre-message documentation update
+
+
     - Create .kiro/hooks/fetch-docs-message.json configuration
     - Configure hook to trigger on message send
     - Set up MCP queries for latest AWS and Next.js documentation
