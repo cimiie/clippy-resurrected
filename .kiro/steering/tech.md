@@ -17,23 +17,23 @@
 - Target: ES2020
 - Module resolution: bundler
 
-## Common Commands
+## Common Commands (Windows)
 
-```bash
-# Development
-npm run dev              # Start dev server on localhost:3000
+```cmd
+REM Development
+npm run dev              & REM Start dev server on localhost:3000
 
-# Testing
-npm run test             # Run tests once
-npm run test:coverage    # Run tests with coverage report
-npm run test:ui          # Run tests with Vitest UI
+REM Testing
+npm run test             & REM Run tests once
+npm run test:coverage    & REM Run tests with coverage report
+npm run test:ui          & REM Run tests with Vitest UI
 
-# Code Quality
-npm run lint             # Run ESLint
+REM Code Quality
+npm run lint             & REM Run ESLint
 
-# Build & Deploy
-npm run build            # Production build
-npm run start            # Start production server
+REM Build & Deploy
+npm run build            & REM Production build
+npm run start            & REM Start production server
 ```
 
 ## Git Hooks (Husky)
