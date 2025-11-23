@@ -195,11 +195,23 @@
     - **Property 8: Application menu items launch windows**
     - **Validates: Requirements 3.4**
 
-- [ ] 7. Checkpoint - Ensure all tests pass
+- [x] 7. Checkpoint - Ensure all tests pass
+
+
+
+
+
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 8. Build Minesweeper application
-  - [ ] 8.1 Create Minesweeper game logic
+- [x] 8. Build Minesweeper application
+
+
+
+
+
+  - [x] 8.1 Create Minesweeper game logic
+
+
     - Implement grid generation with random mine placement
     - Create cell reveal logic with cascade for empty cells
     - Implement flag toggle functionality
@@ -215,7 +227,9 @@
   - [ ]* 8.4 Write property test for mine click
     - **Property 11: Clicking mine reveals all mines**
     - **Validates: Requirements 4.5**
-  - [ ] 8.5 Create MinesweeperApp UI component
+  - [x] 8.5 Create MinesweeperApp UI component
+
+
     - Build game grid UI with cells
     - Add game controls (reset, difficulty selector)
     - Display mine counter and timer

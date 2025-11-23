@@ -6,9 +6,10 @@ import DesktopIcons from '@/components/DesktopIcons';
 import WindowContainer from '@/components/WindowContainer';
 import Taskbar from '@/components/Taskbar';
 import { MenuItem } from '@/components/StartMenu';
+import MinesweeperApp from '@/apps/MinesweeperApp';
 
 function DesktopContent() {
-  const { windows, restoreWindow, focusWindow } = useWindowManager();
+  const { windows, restoreWindow, focusWindow, openWindow } = useWindowManager();
 
   const handleWindowClick = (windowId: string) => {
     const window = windows.find(w => w.id === windowId);
@@ -48,7 +49,7 @@ function DesktopContent() {
               id: 'minesweeper',
               label: 'Minesweeper',
               icon: '💣',
-              action: () => console.log('Launch Minesweeper')
+              action: () => openWindow(<MinesweeperApp />, 'Minesweeper')
             }
           ]
         }

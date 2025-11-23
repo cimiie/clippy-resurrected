@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import DesktopIcon from './DesktopIcon';
 import { useWindowManager } from '@/contexts/WindowManagerContext';
+import MinesweeperApp from '@/apps/MinesweeperApp';
 import styles from './DesktopIcons.module.css';
 
 interface IconData {
@@ -57,6 +58,14 @@ export default function DesktopIcons() {
           </div>,
           'Internet Explorer'
         );
+      },
+    },
+    {
+      id: 'minesweeper',
+      label: 'Minesweeper',
+      iconImage: '💣',
+      action: () => {
+        openWindow(<MinesweeperApp />, 'Minesweeper');
       },
     },
   ];
