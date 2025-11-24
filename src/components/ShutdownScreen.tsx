@@ -29,7 +29,7 @@ export default function ShutdownScreen({ onComplete }: ShutdownScreenProps) {
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.logo}>
-          <div className={styles.windows95}>Windows 95</div>
+          <div className={styles.kiro97}>Kiro 97</div>
         </div>
         <div className={styles.message}>
           It&apos;s now safe to turn off your computer.

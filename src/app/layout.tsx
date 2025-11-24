@@ -4,8 +4,8 @@ import { FileSystemProvider } from '@/contexts/FileSystemContext';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Windows 95 Emulator',
-  description: 'A nostalgic Windows 95 experience in your browser',
+  title: 'Kiro 97',
+  description: 'A nostalgic retro OS experience in your browser',
 };
 
 export const dynamicParams = true;

@@ -31,16 +31,16 @@ export default function BootScreen({ onComplete }: BootScreenProps) {
     <div className={styles.bootScreen}>
       <div className={styles.content}>
         <div className={styles.logo}>
-          <div className={styles.windowsLogo}>
-            <div className={styles.pane} style={{ background: '#ff0000' }}></div>
-            <div className={styles.pane} style={{ background: '#00ff00' }}></div>
-            <div className={styles.pane} style={{ background: '#0000ff' }}></div>
-            <div className={styles.pane} style={{ background: '#ffff00' }}></div>
+          <div className={styles.kiroLogo}>
+            <div className={styles.pane} style={{ background: '#FF6B35' }}></div>
+            <div className={styles.pane} style={{ background: '#F7931E' }}></div>
+            <div className={styles.pane} style={{ background: '#FDC830' }}></div>
+            <div className={styles.pane} style={{ background: '#00D9FF' }}></div>
           </div>
         </div>
-        <div className={styles.title}>Windows 95</div>
+        <div className={styles.title}>Kiro 97</div>
         <div className={styles.loading}>
-          Starting Windows{dots}
+          Starting Kiro{dots}
         </div>
       </div>
     </div>

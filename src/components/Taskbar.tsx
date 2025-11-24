@@ -41,7 +41,12 @@ export default function Taskbar({
           className={`${styles.startButton} ${isStartMenuOpen ? styles.startButtonPressed : ''}`}
           onClick={handleStartClick}
         >
-          <span className={styles.startIcon}>⊞</span>
+          <div className={styles.startLogo}>
+            <div className={styles.pane} style={{ background: '#FF6B35' }}></div>
+            <div className={styles.pane} style={{ background: '#F7931E' }}></div>
+            <div className={styles.pane} style={{ background: '#FDC830' }}></div>
+            <div className={styles.pane} style={{ background: '#00D9FF' }}></div>
+          </div>
           <span className={styles.startText}>Start</span>
         </button>
         <StartMenu 

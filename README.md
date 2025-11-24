@@ -1,15 +1,16 @@
-# Windows 95 Emulator
+# Kiro 97
 
-A nostalgic browser-based Windows 95 emulator built with Next.js 16, TypeScript, and React.
+A nostalgic browser-based retro OS emulator built with Next.js 16, TypeScript, and React. Experience the classic Windows 98 aesthetic reimagined as Kiro 97.
 
 ## Features
 
-- Authentic Windows 95 UI with draggable/resizable windows
+- Authentic Windows 98-style UI with draggable/resizable windows
 - Functional taskbar with Start Menu
 - Desktop icons and applications
-- Minesweeper game
+- Bomb Sweeper game
 - AI-powered Clippy assistant using AWS Bedrock
-- Mock Internet Explorer browser with AWS content
+- Web Finder browser with AWS content
+- Custom Kiro 97 branding with vibrant color scheme
 
 ## Tech Stack
 

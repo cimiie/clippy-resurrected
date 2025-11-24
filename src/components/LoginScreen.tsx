@@ -25,20 +25,20 @@ export default function LoginScreen({ onLogin }: LoginScreenProps) {
       
       <div className={styles.loginBox}>
         <div className={styles.header}>
-          <div className={styles.windowsLogo}>
-            <div className={styles.pane} style={{ background: '#ff0000' }}></div>
-            <div className={styles.pane} style={{ background: '#00ff00' }}></div>
-            <div className={styles.pane} style={{ background: '#0000ff' }}></div>
-            <div className={styles.pane} style={{ background: '#ffff00' }}></div>
+          <div className={styles.kiroLogo}>
+            <div className={styles.pane} style={{ background: '#FF6B35' }}></div>
+            <div className={styles.pane} style={{ background: '#F7931E' }}></div>
+            <div className={styles.pane} style={{ background: '#FDC830' }}></div>
+            <div className={styles.pane} style={{ background: '#00D9FF' }}></div>
           </div>
           <div className={styles.welcomeText}>
-            Welcome to Windows 95
+            Welcome to Kiro 97
           </div>
         </div>
 
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.instruction}>
-            Type a user name and password to log on to Windows.
+            Type a user name and password to log on to Kiro.
           </div>
 
           <div className={styles.field}>
