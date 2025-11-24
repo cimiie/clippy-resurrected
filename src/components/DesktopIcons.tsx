@@ -16,6 +16,12 @@ const MyComputer = dynamic(() => import('@/apps/MyComputer'), { ssr: false });
 const Kiro = dynamic(() => import('@/apps/Kiro'), { ssr: false });
 const Paint = dynamic(() => import('@/apps/Paint'), { ssr: false });
 const CalculatorApp = dynamic(() => import('@/apps/CalculatorApp'), { ssr: false });
+const WordPadApp = dynamic(() => import('@/apps/WordPadApp'), { ssr: false });
+const CharacterMapApp = dynamic(() => import('@/apps/CharacterMapApp'), { ssr: false });
+const SoundRecorderApp = dynamic(() => import('@/apps/SoundRecorderApp'), { ssr: false });
+const DiskDefragmenterApp = dynamic(() => import('@/apps/DiskDefragmenterApp'), { ssr: false });
+const SystemMonitorApp = dynamic(() => import('@/apps/SystemMonitorApp'), { ssr: false });
+const ControlPanelApp = dynamic(() => import('@/apps/ControlPanelApp'), { ssr: false });
 
 interface IconData {
   id: string;
@@ -32,13 +38,19 @@ export default function DesktopIcons() {
   const handleLaunchApp = (appId: string) => {
     // Handle apps that might be launched from My Computer
     const appMap: Record<string, () => void> = {
-      'calculator': () => openWindow(<CalculatorApp />, 'Calculator'),
-      'paint': () => openWindow(<Paint />, 'Paint'),
-      'notepad': () => openWindow(wrapAppWithHelper(<NotepadApp />, 'Notepad'), 'Notepad'),
-      'internet-explorer': () => openWindow(wrapAppWithHelper(<MockBrowser />, 'Internet Explorer'), 'Internet Explorer'),
-      'minesweeper': () => openWindow(wrapAppWithHelper(<MinesweeperApp />, 'Minesweeper'), 'Minesweeper'),
-      'doom': () => openWindow(wrapAppWithHelper(<DoomApp onClose={() => {}} />, 'Doom'), 'DOOM'),
-      'kiro': () => openWindow(<Kiro />, 'Kiro'),
+      'calc': () => openWindow(<CalculatorApp />, 'Calc'),
+      'draw': () => openWindow(<Paint />, 'Draw'),
+      'textedit': () => openWindow(wrapAppWithHelper(<NotepadApp />, 'TextEdit'), 'TextEdit'),
+      'web-finder': () => openWindow(wrapAppWithHelper(<MockBrowser />, 'Web Finder'), 'Web Finder'),
+      'bomb-sweeper': () => openWindow(wrapAppWithHelper(<MinesweeperApp />, 'Bomb Sweeper'), 'Bomb Sweeper'),
+      'gloom': () => openWindow(wrapAppWithHelper(<DoomApp onClose={() => {}} />, 'Gloom'), 'Gloom'),
+      'kiro-ide': () => openWindow(<Kiro />, 'Kiro IDE'),
+      'wordwrite': () => openWindow(<WordPadApp />, 'WordWrite'),
+      'symbol-viewer': () => openWindow(<CharacterMapApp />, 'Symbol Viewer'),
+      'audio-capture': () => openWindow(<SoundRecorderApp />, 'Audio Capture'),
+      'disk-optimizer': () => openWindow(<DiskDefragmenterApp />, 'Disk Optimizer'),
+      'task-watcher': () => openWindow(<SystemMonitorApp />, 'Task Watcher'),
+      'system-settings': () => openWindow(<ControlPanelApp />, 'System Settings'),
     };
     
     const action = appMap[appId];
@@ -55,87 +67,87 @@ export default function DesktopIcons() {
 
   const icons: IconData[] = [
     {
-      id: 'my-computer',
-      label: 'My Computer',
+      id: 'this-pc',
+      label: 'This PC',
       iconImage: '💻',
       action: () => {
         openWindow(
           <MyComputer onLaunchApp={handleLaunchApp} />,
-          'My Computer'
+          'This PC'
         );
       },
     },
     {
-      id: 'my-documents',
-      label: 'My Documents',
+      id: 'documents',
+      label: 'Documents',
       iconImage: '📄',
       action: () => {
         openWindow(
           <MyComputer onLaunchApp={handleLaunchApp} initialPath="C:\\My Documents" />,
-          'My Documents'
+          'Documents'
         );
       },
     },
     {
-      id: 'recycle-bin',
-      label: 'Recycle Bin',
+      id: 'trash',
+      label: 'Trash',
       iconImage: '🗑️',
       action: () => {
         openWindow(
           <div style={{ padding: '20px' }}>
-            <h2>Recycle Bin</h2>
+            <h2>Trash</h2>
             <p>Deleted files would appear here.</p>
           </div>,
-          'Recycle Bin'
+          'Trash'
         );
       },
     },
     {
-      id: 'notepad',
-      label: 'Notepad',
+      id: 'textedit',
+      label: 'TextEdit',
       iconImage: '📝',
       action: () => {
-        openWindow(wrapAppWithHelper(<NotepadApp />, 'Notepad'), 'Notepad');
+        openWindow(wrapAppWithHelper(<NotepadApp />, 'TextEdit'), 'TextEdit');
       },
     },
     {
-      id: 'internet-explorer',
-      label: 'Internet Explorer',
+      id: 'web-finder',
+      label: 'Web Finder',
       iconImage: '🌐',
       action: () => {
-        openWindow(wrapAppWithHelper(<MockBrowser />, 'Internet Explorer'), 'Internet Explorer');
+        openWindow(wrapAppWithHelper(<MockBrowser />, 'Web Finder'), 'Web Finder');
       },
     },
     {
-      id: 'minesweeper',
-      label: 'Minesweeper',
+      id: 'bomb-sweeper',
+      label: 'Bomb Sweeper',
       iconImage: '💣',
       action: () => {
-        openWindow(wrapAppWithHelper(<MinesweeperApp />, 'Minesweeper'), 'Minesweeper');
+        openWindow(wrapAppWithHelper(<MinesweeperApp />, 'Bomb Sweeper'), 'Bomb Sweeper');
       },
     },
     {
-      id: 'doom',
-      label: 'DOOM',
+      id: 'gloom',
+      label: 'Gloom',
       iconImage: '👹',
       action: () => {
-        openWindow(wrapAppWithHelper(<DoomApp onClose={() => {}} />, 'Doom'), 'DOOM');
+        openWindow(wrapAppWithHelper(<DoomApp onClose={() => {}} />, 'Gloom'), 'Gloom');
       },
     },
     {
-      id: 'kiro',
-      label: 'Kiro',
+      id: 'kiro-ide',
+      label: 'Kiro IDE',
       iconImage: '💻',
       action: () => {
-        openWindow(<Kiro />, 'Kiro');
+        openWindow(<Kiro />, 'Kiro IDE');
       },
     },
     {
-      id: 'paint',
-      label: 'Paint',
+      id: 'draw',
+      label: 'Draw',
       iconImage: '🎨',
       action: () => {
-        openWindow(<Paint />, 'Paint');
+        openWindow(<Paint />, 'Draw');
       },
     },
   ];

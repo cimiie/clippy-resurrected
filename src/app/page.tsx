@@ -55,10 +55,10 @@ function DesktopContentInner() {
       icon: '📁',
       subItems: [
         {
-          id: 'internet-explorer',
-          label: 'Internet Explorer',
+          id: 'web-finder',
+          label: 'Web Finder',
           icon: '🌐',
-          action: () => openWindow(wrapAppWithHelper(<MockBrowser />, 'Internet Explorer'), 'Internet Explorer')
+          action: () => openWindow(wrapAppWithHelper(<MockBrowser />, 'Web Finder'), 'Web Finder')
         },
         {
           id: 'accessories',
@@ -66,40 +66,40 @@ function DesktopContentInner() {
           icon: '📂',
           subItems: [
             {
-              id: 'calculator',
-              label: 'Calculator',
+              id: 'calc',
+              label: 'Calc',
               icon: '🔢',
-              action: () => openWindow(<CalculatorApp />, 'Calculator')
+              action: () => openWindow(<CalculatorApp />, 'Calc')
             },
             {
-              id: 'notepad',
-              label: 'Notepad',
+              id: 'textedit',
+              label: 'TextEdit',
               icon: '📝',
-              action: () => openWindow(wrapAppWithHelper(<NotepadApp />, 'Notepad'), 'Notepad')
+              action: () => openWindow(wrapAppWithHelper(<NotepadApp />, 'TextEdit'), 'TextEdit')
             },
             {
-              id: 'paint',
-              label: 'Paint',
+              id: 'draw',
+              label: 'Draw',
               icon: '🎨',
-              action: () => openWindow(<Paint />, 'Paint')
+              action: () => openWindow(<Paint />, 'Draw')
             },
             {
-              id: 'wordpad',
-              label: 'WordPad',
+              id: 'wordwrite',
+              label: 'WordWrite',
               icon: '📄',
-              action: () => openWindow(<WordPadApp />, 'WordPad')
+              action: () => openWindow(<WordPadApp />, 'WordWrite')
             },
             {
-              id: 'character-map',
-              label: 'Character Map',
+              id: 'symbol-viewer',
+              label: 'Symbol Viewer',
               icon: '🔤',
-              action: () => openWindow(<CharacterMapApp />, 'Character Map')
+              action: () => openWindow(<CharacterMapApp />, 'Symbol Viewer')
             },
             {
-              id: 'sound-recorder',
-              label: 'Sound Recorder',
+              id: 'audio-capture',
+              label: 'Audio Capture',
               icon: '🎙️',
-              action: () => openWindow(<SoundRecorderApp />, 'Sound Recorder')
+              action: () => openWindow(<SoundRecorderApp />, 'Audio Capture')
             },
             {
               id: 'system-tools',
@@ -107,32 +107,32 @@ function DesktopContentInner() {
               icon: '🔧',
               subItems: [
                 {
-                  id: 'disk-defragmenter',
-                  label: 'Disk Defragmenter',
+                  id: 'disk-optimizer',
+                  label: 'Disk Optimizer',
                   icon: '💾',
-                  action: () => openWindow(<DiskDefragmenterApp />, 'Disk Defragmenter')
+                  action: () => openWindow(<DiskDefragmenterApp />, 'Disk Optimizer')
                 },
                 {
-                  id: 'system-monitor',
-                  label: 'System Monitor',
+                  id: 'task-watcher',
+                  label: 'Task Watcher',
                   icon: '📊',
-                  action: () => openWindow(<SystemMonitorApp />, 'System Monitor')
+                  action: () => openWindow(<SystemMonitorApp />, 'Task Watcher')
                 }
               ]
             }
           ]
         },
         {
-          id: 'kiro',
-          label: 'Kiro',
+          id: 'kiro-ide',
+          label: 'Kiro IDE',
           icon: '💻',
-          action: () => openWindow(<Kiro />, 'Kiro')
+          action: () => openWindow(<Kiro />, 'Kiro IDE')
         },
         {
-          id: 'msdos',
-          label: 'MS-DOS Prompt',
+          id: 'command-shell',
+          label: 'Command Shell',
           icon: '⌨️',
-          action: () => openWindow(<CommandPromptApp />, 'MS-DOS Prompt')
+          action: () => openWindow(<CommandPromptApp />, 'Command Shell')
         },
         {
           id: 'games',
@@ -140,16 +140,16 @@ function DesktopContentInner() {
           icon: '🎮',
           subItems: [
             {
-              id: 'minesweeper',
-              label: 'Minesweeper',
+              id: 'bomb-sweeper',
+              label: 'Bomb Sweeper',
               icon: '💣',
-              action: () => openWindow(wrapAppWithHelper(<MinesweeperApp />, 'Minesweeper'), 'Minesweeper')
+              action: () => openWindow(wrapAppWithHelper(<MinesweeperApp />, 'Bomb Sweeper'), 'Bomb Sweeper')
             },
             {
-              id: 'doom',
-              label: 'DOOM',
+              id: 'gloom',
+              label: 'Gloom',
               icon: '👹',
-              action: () => openWindow(wrapAppWithHelper(<DoomApp onClose={() => {}} />, 'Doom'), 'DOOM')
+              action: () => openWindow(wrapAppWithHelper(<DoomApp onClose={() => {}} />, 'Gloom'), 'Gloom')
             }
           ]
         }
@@ -166,10 +166,10 @@ function DesktopContentInner() {
       icon: '⚙️',
       subItems: [
         {
-          id: 'control-panel',
-          label: 'Control Panel',
+          id: 'system-settings',
+          label: 'System Settings',
           icon: '🎛️',
-          action: () => openWindow(<ControlPanelApp />, 'Control Panel')
+          action: () => openWindow(<ControlPanelApp />, 'System Settings')
         }
       ]
     },
@@ -189,7 +189,7 @@ function DesktopContentInner() {
       id: 'run',
       label: 'Run...',
       icon: '▶️',
-      action: () => openWindow(<CommandPromptApp />, 'Run')
+      action: () => openWindow(<CommandPromptApp />, 'Command Shell')
     },
     {
       id: 'shutdown',

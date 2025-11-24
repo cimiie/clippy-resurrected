@@ -34,12 +34,12 @@ const getBaseFileSystem = (): FileSystemItem[] => [
         path: 'C:\\Program Files',
         children: [
           {
-            name: 'Internet Explorer',
+            name: 'Web Finder',
             type: 'folder',
             icon: '📁',
-            path: 'C:\\Program Files\\Internet Explorer',
+            path: 'C:\\Program Files\\Web Finder',
             children: [
-              { name: 'iexplore.exe', type: 'file', icon: '🌐', path: 'C:\\Program Files\\Internet Explorer\\iexplore.exe' },
+              { name: 'webfinder.exe', type: 'file', icon: '🌐', path: 'C:\\Program Files\\Web Finder\\webfinder.exe' },
             ],
           },
           {
@@ -48,7 +48,22 @@ const getBaseFileSystem = (): FileSystemItem[] => [
             icon: '📁',
             path: 'C:\\Program Files\\Accessories',
             children: [
-              { name: 'notepad.exe', type: 'file', icon: '📝', path: 'C:\\Program Files\\Accessories\\notepad.exe' },
+              { name: 'textedit.exe', type: 'file', icon: '📝', path: 'C:\\Program Files\\Accessories\\textedit.exe' },
+              { name: 'calc.exe', type: 'file', icon: '🔢', path: 'C:\\Program Files\\Accessories\\calc.exe' },
+              { name: 'draw.exe', type: 'file', icon: '🎨', path: 'C:\\Program Files\\Accessories\\draw.exe' },
+              { name: 'wordwrite.exe', type: 'file', icon: '📄', path: 'C:\\Program Files\\Accessories\\wordwrite.exe' },
+              { name: 'symbolviewer.exe', type: 'file', icon: '🔤', path: 'C:\\Program Files\\Accessories\\symbolviewer.exe' },
+              { name: 'audiocapture.exe', type: 'file', icon: '🎙️', path: 'C:\\Program Files\\Accessories\\audiocapture.exe' },
+            ],
+          },
+          {
+            name: 'System Tools',
+            type: 'folder',
+            icon: '📁',
+            path: 'C:\\Program Files\\System Tools',
+            children: [
+              { name: 'diskoptimizer.exe', type: 'file', icon: '💾', path: 'C:\\Program Files\\System Tools\\diskoptimizer.exe' },
+              { name: 'taskwatcher.exe', type: 'file', icon: '📊', path: 'C:\\Program Files\\System Tools\\taskwatcher.exe' },
             ],
           },
           {
@@ -57,8 +72,17 @@ const getBaseFileSystem = (): FileSystemItem[] => [
             icon: '📁',
             path: 'C:\\Program Files\\Games',
             children: [
-              { name: 'minesweeper.exe', type: 'file', icon: '💣', path: 'C:\\Program Files\\Games\\minesweeper.exe' },
-              { name: 'doom.exe', type: 'file', icon: '👹', path: 'C:\\Program Files\\Games\\doom.exe' },
+              { name: 'bombsweeper.exe', type: 'file', icon: '💣', path: 'C:\\Program Files\\Games\\bombsweeper.exe' },
+              { name: 'gloom.exe', type: 'file', icon: '👹', path: 'C:\\Program Files\\Games\\gloom.exe' },
+            ],
+          },
+          {
+            name: 'Kiro IDE',
+            type: 'folder',
+            icon: '📁',
+            path: 'C:\\Program Files\\Kiro IDE',
+            children: [
+              { name: 'kiro.exe', type: 'file', icon: '💻', path: 'C:\\Program Files\\Kiro IDE\\kiro.exe' },
             ],
           },
         ],
@@ -78,9 +102,7 @@ const getBaseFileSystem = (): FileSystemItem[] => [
             children: [
               { name: 'cmd.exe', type: 'file', icon: '⌨️', path: 'C:\\Windows\\system32\\cmd.exe' },
               { name: 'regedit.exe', type: 'file', icon: '📋', path: 'C:\\Windows\\system32\\regedit.exe' },
-              { name: 'calc.exe', type: 'file', icon: '🔢', path: 'C:\\Windows\\system32\\calc.exe' },
-              { name: 'notepad.exe', type: 'file', icon: '📝', path: 'C:\\Windows\\system32\\notepad.exe' },
-              { name: 'mspaint.exe', type: 'file', icon: '🎨', path: 'C:\\Windows\\system32\\mspaint.exe' },
+              { name: 'systemsettings.exe', type: 'file', icon: '🎛️', path: 'C:\\Windows\\system32\\systemsettings.exe' },
             ],
           },
         ],
@@ -199,7 +221,7 @@ export default function MyComputer({ onLaunchApp, initialPath = '' }: MyComputer
       if (item.name.endsWith('.exe')) {
         // Handle system executables directly
         if (item.name === 'cmd.exe') {
-          openWindow(<CommandPromptApp />, 'MS-DOS Prompt');
+          openWindow(<CommandPromptApp />, 'Command Shell');
           return;
         }
         if (item.name === 'regedit.exe') {
@@ -210,12 +232,19 @@ export default function MyComputer({ onLaunchApp, initialPath = '' }: MyComputer
         // Handle other apps via onLaunchApp
         if (onLaunchApp) {
           const appMap: Record<string, string> = {
-            'iexplore.exe': 'internet-explorer',
-            'notepad.exe': 'notepad',
-            'minesweeper.exe': 'minesweeper',
-            'doom.exe': 'doom',
-            'calc.exe': 'calculator',
-            'mspaint.exe': 'paint',
+            'webfinder.exe': 'web-finder',
+            'textedit.exe': 'textedit',
+            'bombsweeper.exe': 'bomb-sweeper',
+            'gloom.exe': 'gloom',
+            'calc.exe': 'calc',
+            'draw.exe': 'draw',
+            'kiro.exe': 'kiro-ide',
+            'wordwrite.exe': 'wordwrite',
+            'symbolviewer.exe': 'symbol-viewer',
+            'audiocapture.exe': 'audio-capture',
+            'diskoptimizer.exe': 'disk-optimizer',
+            'taskwatcher.exe': 'task-watcher',
+            'systemsettings.exe': 'system-settings',
           };
           const appId = appMap[item.name];
           if (appId) {
@@ -223,23 +252,23 @@ export default function MyComputer({ onLaunchApp, initialPath = '' }: MyComputer
           }
         }
       }
-      // Handle .txt files - open in Notepad
+      // Handle .txt files - open in TextEdit
       else if (item.name.endsWith('.txt')) {
         const file = getFile(item.path);
         if (file) {
           openWindow(
             <NotepadApp initialContent={file.content} initialFilename={file.name} />,
-            `Notepad - ${file.name}`
+            `TextEdit - ${file.name}`
           );
         }
       }
-      // Handle .html files - open in Internet Explorer
+      // Handle .html files - open in Web Finder
       else if (item.name.endsWith('.html') || item.name.endsWith('.htm')) {
         const file = getFile(item.path);
         if (file) {
           openWindow(
             <MockBrowser initialContent={file.content} initialFilename={file.name} />,
-            'Internet Explorer'
+            'Web Finder'
           );
         }
       }
