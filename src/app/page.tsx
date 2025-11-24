@@ -9,6 +9,7 @@ import { MenuItem } from '@/components/StartMenu';
 import MinesweeperApp from '@/apps/MinesweeperApp';
 import MockBrowser from '@/apps/MockBrowser';
 import ClippyWithController from '@/components/ClippyWithController';
+import ErrorBoundary from '@/components/ErrorBoundary';
 
 function DesktopContent() {
   const { windows, restoreWindow, focusWindow, openWindow } = useWindowManager();
@@ -83,16 +84,22 @@ function DesktopContent() {
 
   return (
     <>
-      <DesktopEnvironment>
-        <DesktopIcons />
-        <WindowContainer />
-      </DesktopEnvironment>
-      <Taskbar 
-        windows={windows}
-        onWindowClick={handleWindowClick}
-        menuItems={menuItems}
-      />
-      <ClippyWithController />
+      <ErrorBoundary>
+        <DesktopEnvironment>
+          <DesktopIcons />
+          <WindowContainer />
+        </DesktopEnvironment>
+      </ErrorBoundary>
+      <ErrorBoundary>
+        <Taskbar 
+          windows={windows}
+          onWindowClick={handleWindowClick}
+          menuItems={menuItems}
+        />
+      </ErrorBoundary>
+      <ErrorBoundary>
+        <ClippyWithController />
+      </ErrorBoundary>
     </>
   );
 }

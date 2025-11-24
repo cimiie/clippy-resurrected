@@ -27,6 +27,45 @@ A nostalgic browser-based Windows 95 emulator built with Next.js 16, TypeScript,
 
 - Node.js 18+ 
 - npm or yarn
+- AWS Account with Bedrock access (for Clippy assistant)
+
+### Environment Variables
+
+The application requires AWS credentials to enable the Clippy assistant. Create a `.env.local` file in the root directory with the following variables:
+
+```bash
+# AWS Configuration (Required for Clippy)
+AWS_REGION=us-east-1
+AWS_ACCESS_KEY_ID=your_access_key_here
+AWS_SECRET_ACCESS_KEY=your_secret_key_here
+BEDROCK_MODEL_ID=anthropic.claude-3-sonnet-20240229-v1:0
+
+# Application Configuration
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
+
+**Environment Variable Details**:
+
+- `AWS_REGION`: AWS region where Bedrock is available (e.g., `us-east-1`, `us-west-2`)
+- `AWS_ACCESS_KEY_ID`: Your AWS access key with Bedrock permissions
+- `AWS_SECRET_ACCESS_KEY`: Your AWS secret access key
+- `BEDROCK_MODEL_ID`: The Claude model ID to use (default: `anthropic.claude-3-sonnet-20240229-v1:0`)
+- `NEXT_PUBLIC_APP_URL`: Public URL of the application (used for client-side features)
+
+**AWS Bedrock Setup**:
+
+1. Create an AWS account if you don't have one
+2. Enable AWS Bedrock in your chosen region
+3. Request access to Claude models in the Bedrock console
+4. Create an IAM user with Bedrock permissions:
+   - `bedrock:InvokeModel`
+   - `bedrock:InvokeModelWithResponseStream`
+5. Generate access keys for the IAM user
+6. Add the credentials to your `.env.local` file
+
+**Note**: A `.env.example` file is provided as a template. Copy it to `.env.local` and fill in your actual credentials.
+
+**Security**: Never commit `.env.local` to version control. It's already included in `.gitignore`.
 
 ### Installation
 
@@ -129,6 +168,47 @@ The MCP servers provide documentation context automatically through:
 - TypeScript strict mode enabled for type safety
 - All commits must pass linting and tests
 - MCP servers provide real-time Next.js and AWS documentation
+
+## Deployment
+
+### AWS Amplify Deployment
+
+This application is configured for deployment on AWS Amplify with automatic CI/CD.
+
+**Deployment Steps**:
+
+1. **Connect Repository**: Link your Git repository to AWS Amplify
+2. **Configure Build Settings**: Amplify will auto-detect Next.js configuration
+3. **Set Environment Variables**: Add the following in Amplify Console → Environment Variables:
+   - `AWS_REGION`
+   - `AWS_ACCESS_KEY_ID`
+   - `AWS_SECRET_ACCESS_KEY`
+   - `BEDROCK_MODEL_ID`
+   - `NEXT_PUBLIC_APP_URL` (set to your Amplify domain)
+
+4. **Deploy**: Push to your main branch to trigger automatic deployment
+
+**Build Configuration**:
+
+The build process automatically:
+- Runs `npm ci` to install dependencies
+- Executes `npm run test` to run all tests
+- Runs `npm run build` to create production build
+- Only deploys if all tests pass
+
+**Environment Variable Security**:
+- Environment variables are encrypted at rest in Amplify
+- Server-side variables (AWS credentials) are never exposed to the client
+- Only `NEXT_PUBLIC_*` variables are included in the client bundle
+
+**Monitoring**:
+- Build logs available in Amplify Console
+- CloudWatch integration for application logs
+- Automatic rollback on build failures
+
+**Custom Domain** (Optional):
+- Configure custom domain in Amplify Console
+- HTTPS enabled automatically with AWS-managed certificates
 
 ## License
 
