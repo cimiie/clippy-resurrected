@@ -365,3 +365,47 @@
   color: #808080;
   cursor: not-allowed;
 }
+
+/* Quick Actions Inline */
+.quickActionsInline {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.quickActionButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #000000 #000000 #ffffff;
+  cursor: pointer;
+  font-family: 'MS Sans Serif', Tahoma, Arial, sans-serif;
+  font-size: 11px;
+  text-align: left;
+  transition: background 0.1s;
+  width: 100%;
+}
+
+.quickActionButton:hover {
+  background: #dfdfdf;
+}
+
+.quickActionButton:active {
+  border-color: #000000 #ffffff #ffffff #000000;
+  padding: 7px 9px 5px 11px;
+}
+
+.actionIcon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.actionLabel {
+  flex: 1;
+  color: #000000;
+  font-weight: bold;
+}

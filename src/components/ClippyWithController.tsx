@@ -3,10 +3,13 @@
 import { useState, useCallback } from 'react';
 import ClippyAssistant from './ClippyAssistant';
 import TokenController from './TokenController';
+import { useWindowManager } from '@/contexts/WindowManagerContext';
+import MinesweeperApp from '@/apps/MinesweeperApp';
 
 export default function ClippyWithController() {
   const [maxResponseLength, setMaxResponseLength] = useState(1000);
   const [tokensUsed, setTokensUsed] = useState(0);
+  const { openWindow } = useWindowManager();
 
   const handleTokenUsage = useCallback((tokens: number) => {
     setTokensUsed((prev) => prev + tokens);
@@ -24,6 +27,16 @@ export default function ClippyWithController() {
     setMaxResponseLength(length);
   }, []);
 
+  const handleQuickAction = useCallback((actionId: string) => {
+    switch (actionId) {
+      case 'launch-minesweeper':
+        openWindow(<MinesweeperApp />, 'Minesweeper');
+        break;
+      default:
+        console.log('Unknown quick action:', actionId);
+    }
+  }, [openWindow]);
+
   return (
     <>
       <TokenController
@@ -35,6 +48,7 @@ export default function ClippyWithController() {
       <ClippyAssistant
         maxResponseLength={maxResponseLength}
         onTokenUsage={handleTokenUsage}
+        onQuickAction={handleQuickAction}
       />
     </>
   );

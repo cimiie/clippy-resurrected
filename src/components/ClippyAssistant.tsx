@@ -4,21 +4,30 @@ import { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import styles from './ClippyAssistant.module.css';
 
+export interface QuickAction {
+  id: string;
+  label: string;
+  icon: string;
+}
+
 export interface ChatMessage {
   id: string;
   role: 'user' | 'assistant';
   content: string;
   timestamp: Date;
+  quickActions?: QuickAction[];
 }
 
 interface ClippyAssistantProps {
   maxResponseLength: number;
   onTokenUsage?: (tokens: number) => void;
+  onQuickAction?: (actionId: string) => void;
 }
 
 export default function ClippyAssistant({
   maxResponseLength,
   onTokenUsage,
+  onQuickAction,
 }: ClippyAssistantProps) {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -26,6 +35,22 @@ export default function ClippyAssistant({
   const [isTyping, setIsTyping] = useState(false);
   const [animation, setAnimation] = useState<'idle' | 'thinking' | 'speaking'>('idle');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Show welcome message with quick actions when chat opens
+  useEffect(() => {
+    if (isChatOpen && messages.length === 0) {
+      const welcomeMessage: ChatMessage = {
+        id: 'welcome',
+        role: 'assistant',
+        content: "Hi! I'm Clippy, your intelligent assistant! What would you like to do?",
+        timestamp: new Date(),
+        quickActions: [
+          { id: 'launch-minesweeper', label: 'Launch Minesweeper', icon: '💣' },
+        ],
+      };
+      setMessages([welcomeMessage]);
+    }
+  }, [isChatOpen, messages.length]);
 
   // Idle animation cycle
   useEffect(() => {
@@ -46,6 +71,12 @@ export default function ClippyAssistant({
 
   const handleClippyClick = () => {
     setIsChatOpen(!isChatOpen);
+  };
+
+  const handleQuickAction = (actionId: string) => {
+    if (onQuickAction) {
+      onQuickAction(actionId);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -135,7 +166,7 @@ export default function ClippyAssistant({
       {isChatOpen && (
         <div className={styles.chatWindow}>
           <div className={styles.chatTitleBar}>
-            <span className={styles.chatTitle}>Clippy - AWS Assistant</span>
+            <span className={styles.chatTitle}>Clippy - Intelligent Assistant</span>
             <button
               className={styles.chatCloseButton}
               onClick={() => setIsChatOpen(false)}
@@ -147,13 +178,6 @@ export default function ClippyAssistant({
 
           <div className={styles.chatContent}>
             <div className={styles.messagesContainer}>
-              {messages.length === 0 && (
-                <div className={styles.welcomeMessage}>
-                  <p>Hi! I&apos;m Clippy, your AWS assistant!</p>
-                  <p>Ask me anything about AWS services.</p>
-                </div>
-              )}
-
               {messages.map((message) => (
                 <div
                   key={message.id}
@@ -168,6 +192,20 @@ export default function ClippyAssistant({
                       message.content
                     )}
                   </div>
+                  {message.quickActions && message.quickActions.length > 0 && (
+                    <div className={styles.quickActionsInline}>
+                      {message.quickActions.map((action) => (
+                        <button
+                          key={action.id}
+                          className={styles.quickActionButton}
+                          onClick={() => handleQuickAction(action.id)}
+                        >
+                          <span className={styles.actionIcon}>{action.icon}</span>
+                          <span className={styles.actionLabel}>{action.label}</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
                   <div className={styles.messageTime}>
                     {message.timestamp.toLocaleTimeString()}
                   </div>
@@ -193,7 +231,7 @@ export default function ClippyAssistant({
                 className={styles.input}
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-                placeholder="Ask about AWS..."
+                placeholder="Type a message..."
                 disabled={isTyping}
               />
               <button
