@@ -9,6 +9,7 @@ import Taskbar from '@/components/Taskbar';
 import { MenuItem } from '@/components/StartMenu';
 import ClippyWithController from '@/components/ClippyWithController';
 import ErrorBoundary from '@/components/ErrorBoundary';
+import ClientOnly from '@/components/ClientOnly';
 
 // Dynamic imports to avoid SSR issues
 const MinesweeperApp = dynamic(() => import('@/apps/MinesweeperApp'), { ssr: false });
@@ -214,8 +215,10 @@ function DesktopContent() {
 
 export default function Home() {
   return (
-    <WindowManagerProvider>
-      <DesktopContent />
-    </WindowManagerProvider>
+    <ClientOnly>
+      <WindowManagerProvider>
+        <DesktopContent />
+      </WindowManagerProvider>
+    </ClientOnly>
   );
 }

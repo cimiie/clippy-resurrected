@@ -41,7 +41,9 @@ class ErrorBoundary extends Component<Props, State> {
   };
 
   handleReload = (): void => {
-    window.location.reload();
+    if (typeof window !== 'undefined') {
+      window.location.reload();
+    }
   };
 
   render(): ReactNode {
