@@ -18,8 +18,9 @@ interface StartMenuProps {
 }
 
 export default function StartMenu({ isOpen, onClose, menuItems }: StartMenuProps) {
-  const [hoveredItemId, setHoveredItemId] = useState<string | null>(null);
+  const [openSubMenuId, setOpenSubMenuId] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (!isOpen) {
@@ -32,7 +33,6 @@ export default function StartMenu({ isOpen, onClose, menuItems }: StartMenuProps
       }
     };
 
-    // Add a small delay to prevent immediate closing when opening
     const timeoutId = setTimeout(() => {
       document.addEventListener('mousedown', handleClickOutside);
     }, 100);
@@ -40,10 +40,17 @@ export default function StartMenu({ isOpen, onClose, menuItems }: StartMenuProps
     return () => {
       clearTimeout(timeoutId);
       document.removeEventListener('mousedown', handleClickOutside);
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current);
+      }
     };
   }, [isOpen, onClose]);
 
   if (!isOpen) {
+    // Reset submenu state when closed
+    if (openSubMenuId !== null) {
+      setOpenSubMenuId(null);
+    }
     return null;
   }
 
@@ -56,22 +63,49 @@ export default function StartMenu({ isOpen, onClose, menuItems }: StartMenuProps
     }
   };
 
-  const handleItemHover = (itemId: string) => {
-    setHoveredItemId(itemId);
+  const handleItemEnter = (itemId: string) => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+    setOpenSubMenuId(itemId);
   };
 
-  const renderMenuItem = (item: MenuItem, level: number = 0) => {
+  const handleItemLeave = () => {
+    // Delay closing to allow moving to submenu
+    closeTimeoutRef.current = setTimeout(() => {
+      setOpenSubMenuId(null);
+    }, 200);
+  };
+
+  const handleSubMenuEnter = () => {
+    // Cancel any pending close
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+  };
+
+  const handleSubMenuLeave = () => {
+    // Close submenu when leaving it
+    closeTimeoutRef.current = setTimeout(() => {
+      setOpenSubMenuId(null);
+    }, 200);
+  };
+
+  const renderMenuItem = (item: MenuItem) => {
     const hasSubItems = item.subItems && item.subItems.length > 0;
-    const isHovered = hoveredItemId === item.id;
+    const isOpen = openSubMenuId === item.id;
 
     return (
       <div
         key={item.id}
-        className={styles.menuItemContainer}
-        onMouseEnter={() => handleItemHover(item.id)}
+        className={styles.menuItemWrapper}
+        onMouseEnter={() => hasSubItems ? handleItemEnter(item.id) : setOpenSubMenuId(null)}
+        onMouseLeave={hasSubItems ? handleItemLeave : undefined}
       >
         <div
-          className={`${styles.menuItem} ${isHovered ? styles.menuItemHovered : ''}`}
+          className={`${styles.menuItem} ${isOpen ? styles.menuItemActive : ''}`}
           onClick={(e) => handleItemClick(item, e)}
         >
           {item.icon && (
@@ -82,9 +116,24 @@ export default function StartMenu({ isOpen, onClose, menuItems }: StartMenuProps
             <span className={styles.menuArrow}>▶</span>
           )}
         </div>
-        {hasSubItems && isHovered && (
-          <div className={styles.subMenu} style={{ left: '100%', top: 0 }}>
-            {item.subItems!.map((subItem) => renderMenuItem(subItem, level + 1))}
+        {hasSubItems && isOpen && (
+          <div 
+            className={styles.subMenu}
+            onMouseEnter={handleSubMenuEnter}
+            onMouseLeave={handleSubMenuLeave}
+          >
+            {item.subItems!.map((subItem) => (
+              <div
+                key={subItem.id}
+                className={styles.subMenuItem}
+                onClick={(e) => handleItemClick(subItem, e)}
+              >
+                {subItem.icon && (
+                  <span className={styles.menuIcon}>{subItem.icon}</span>
+                )}
+                <span className={styles.menuLabel}>{subItem.label}</span>
+              </div>
+            ))}
           </div>
         )}
       </div>

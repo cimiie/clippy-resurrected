@@ -3,25 +3,21 @@
   bottom: 100%;
   left: 0;
   width: 200px;
-  background: var(--win95-gray);
-  border: var(--win95-border-width) solid;
-  border-color: var(--win95-border-raised);
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
   box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
   z-index: 10000;
-  font-family: var(--win95-font-family);
-  font-size: var(--win95-font-size-normal);
+  font-family: 'MS Sans Serif', Arial, sans-serif;
+  font-size: 11px;
 }
 
 .menuHeader {
-  background: linear-gradient(
-    to right,
-    var(--win95-title-bar-blue),
-    var(--win95-title-bar-gradient-end)
-  );
-  color: var(--win95-white);
-  padding: var(--win95-spacing-sm) var(--win95-spacing-md);
+  background: linear-gradient(to right, #000080, #1084d0);
+  color: #ffffff;
+  padding: 4px 8px;
   font-weight: bold;
-  border-bottom: var(--win95-border-width) solid var(--win95-dark-gray);
+  border-bottom: 2px solid #808080;
 }
 
 .menuHeaderText {
@@ -29,26 +25,26 @@
 }
 
 .menuContent {
-  padding: var(--win95-spacing-xs);
+  padding: 2px;
 }
 
-.menuItemContainer {
+.menuItemWrapper {
   position: relative;
 }
 
 .menuItem {
   display: flex;
   align-items: center;
-  padding: var(--win95-spacing-sm) var(--win95-spacing-md);
+  padding: 4px 8px;
   cursor: pointer;
-  position: relative;
-  gap: var(--win95-spacing-md);
+  gap: 8px;
+  user-select: none;
 }
 
 .menuItem:hover,
-.menuItemHovered {
-  background: var(--win95-selection-blue);
-  color: var(--win95-white);
+.menuItemActive {
+  background: #000080;
+  color: #ffffff;
 }
 
 .menuIcon {
@@ -71,14 +67,28 @@
 
 .subMenu {
   position: absolute;
-  background: var(--win95-gray);
-  border: var(--win95-border-width) solid;
-  border-color: var(--win95-border-raised);
+  left: 100%;
+  top: -2px;
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
   box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
   min-width: 180px;
+  padding: 2px;
   z-index: 10001;
+  margin-left: -4px;
 }
 
-.subMenu .menuContent {
-  padding: var(--win95-spacing-xs);
+.subMenuItem {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  cursor: pointer;
+  gap: 8px;
+  user-select: none;
+}
+
+.subMenuItem:hover {
+  background: #000080;
+  color: #ffffff;
 }
