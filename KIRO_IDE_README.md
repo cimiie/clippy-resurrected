@@ -1,6 +1,6 @@
-# Kiro - Windows 95 Style Code Editor
+# Kiro - Retro Style Code Editor
 
-A nostalgic Windows 95-style code editor with AI-powered assistance from Clippy using AWS Bedrock.
+A nostalgic retro-style code editor with AI-powered assistance from Clippy using AWS Bedrock.
 
 ## Features
 

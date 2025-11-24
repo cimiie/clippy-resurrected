@@ -102,7 +102,7 @@ const codeConfig = getClippyConfig('code');
 
 - Always refer to AI features as "Clippy"
 - Use 📎 emoji for Clippy UI elements
-- Maintain Windows 95 personality in prompts
+- Maintain Kiro 97 personality in prompts
 
 ## Current API Routes
 

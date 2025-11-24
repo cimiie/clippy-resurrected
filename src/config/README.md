@@ -1,6 +1,6 @@
 # Configuration
 
-Centralized configuration files for the Windows 95 emulator.
+Centralized configuration files for the Kiro 97 emulator.
 
 ## Clippy Configuration (`clippy.ts`)
 
@@ -12,7 +12,7 @@ Shared configuration for all Clippy (AI assistant) features powered by AWS Bedro
 Used for conversational assistance (floating Clippy character).
 - Max tokens: 1000
 - Temperature: 0.7
-- Personality: Helpful Windows 95 assistant
+- Personality: Helpful Kiro 97 assistant
 
 #### `CODE_CLIPPY_CONFIG`
 Used for code assistance in the Kiro editor.

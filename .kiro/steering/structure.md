@@ -8,7 +8,7 @@ src/
 │   ├── layout.tsx    # Root layout (includes FileSystemProvider)
 │   ├── page.tsx      # Home page
 │   └── globals.css   # Global styles
-├── apps/             # Windows 95 applications
+├── apps/             # Kiro 97 applications
 ├── components/       # React components
 ├── contexts/         # React context providers
 │   └── FileSystemContext.tsx  # Virtual file system (in-memory)

@@ -127,4 +127,4 @@ Try these prompts:
 Agent mode is controlled by the prompt in `/api/code-assist`:
 - Can be toggled by modifying the `agentPrompt` variable
 - Uses `CODE_CLIPPY_CONFIG` for token limits and temperature
-- Maintains Windows 95 Clippy personality
+- Maintains Kiro 97 Clippy personality
