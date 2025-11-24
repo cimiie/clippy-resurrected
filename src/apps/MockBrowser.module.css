@@ -1,0 +1,211 @@
+.browser {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #c0c0c0;
+  font-family: 'MS Sans Serif', Tahoma, Arial, sans-serif;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  background-color: #c0c0c0;
+  border-bottom: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+}
+
+.navButton {
+  width: 24px;
+  height: 22px;
+  background-color: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  cursor: pointer;
+  font-family: 'MS Sans Serif', Tahoma, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: #000000;
+}
+
+.navButton:hover:not(:disabled) {
+  background-color: #d4d4d4;
+}
+
+.navButton:active:not(:disabled) {
+  border-color: #808080 #ffffff #ffffff #808080;
+  padding-top: 2px;
+  padding-left: 2px;
+}
+
+.navButton:disabled {
+  color: #808080;
+  cursor: default;
+}
+
+.addressBarForm {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+
+.addressLabel {
+  font-size: 11px;
+  color: #000000;
+}
+
+.addressBar {
+  flex: 1;
+  height: 20px;
+  padding: 2px 4px;
+  border: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+  background-color: #ffffff;
+  font-family: 'MS Sans Serif', Tahoma, Arial, sans-serif;
+  font-size: 11px;
+  color: #000000;
+}
+
+.addressBar:focus {
+  outline: 1px dotted #000000;
+  outline-offset: -3px;
+}
+
+.goButton {
+  height: 22px;
+  padding: 0 8px;
+  background-color: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  cursor: pointer;
+  font-family: 'MS Sans Serif', Tahoma, Arial, sans-serif;
+  font-size: 11px;
+  color: #000000;
+}
+
+.goButton:hover {
+  background-color: #d4d4d4;
+}
+
+.goButton:active {
+  border-color: #808080 #ffffff #ffffff #808080;
+  padding-top: 2px;
+  padding-left: 2px;
+}
+
+.statusBar {
+  padding: 2px 4px;
+  background-color: #c0c0c0;
+  border-bottom: 1px solid #808080;
+  font-size: 11px;
+  color: #000000;
+}
+
+.content {
+  flex: 1;
+  overflow: auto;
+  background-color: #ffffff;
+  padding: 16px;
+  color: #000000;
+}
+
+.bottomBar {
+  padding: 2px 4px;
+  background-color: #c0c0c0;
+  border-top: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  font-size: 11px;
+  color: #000000;
+}
+
+/* Page Content Styling */
+.page {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.page h1 {
+  color: #000080;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  border-bottom: 2px solid #000080;
+  padding-bottom: 4px;
+}
+
+.page h2 {
+  color: #000080;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+.page p {
+  margin-bottom: 12px;
+  line-height: 1.5;
+  font-size: 12px;
+}
+
+.page a {
+  color: #0000ff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.page a:visited {
+  color: #800080;
+}
+
+.page a:hover {
+  color: #ff0000;
+}
+
+.section {
+  margin-bottom: 20px;
+  padding: 12px;
+  background-color: #f0f0f0;
+  border: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+}
+
+.page ul {
+  margin-left: 20px;
+  margin-bottom: 12px;
+}
+
+.page li {
+  margin-bottom: 6px;
+  line-height: 1.4;
+  font-size: 12px;
+}
+
+.button {
+  padding: 4px 12px;
+  background-color: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  cursor: pointer;
+  font-family: 'MS Sans Serif', Tahoma, Arial, sans-serif;
+  font-size: 11px;
+  color: #000000;
+  margin-top: 8px;
+}
+
+.button:hover {
+  background-color: #d4d4d4;
+}
+
+.button:active {
+  border-color: #808080 #ffffff #ffffff #808080;
+  padding-top: 6px;
+  padding-left: 14px;
+  padding-bottom: 2px;
+  padding-right: 10px;
+}

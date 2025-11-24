@@ -4,6 +4,7 @@ import { useState } from 'react';
 import DesktopIcon from './DesktopIcon';
 import { useWindowManager } from '@/contexts/WindowManagerContext';
 import MinesweeperApp from '@/apps/MinesweeperApp';
+import MockBrowser from '@/apps/MockBrowser';
 import styles from './DesktopIcons.module.css';
 
 interface IconData {
@@ -51,13 +52,7 @@ export default function DesktopIcons() {
       label: 'Internet Explorer',
       iconImage: '🌐',
       action: () => {
-        openWindow(
-          <div style={{ padding: '20px' }}>
-            <h2>Internet Explorer</h2>
-            <p>Mock browser coming soon...</p>
-          </div>,
-          'Internet Explorer'
-        );
+        openWindow(<MockBrowser />, 'Internet Explorer');
       },
     },
     {

@@ -7,6 +7,7 @@ import WindowContainer from '@/components/WindowContainer';
 import Taskbar from '@/components/Taskbar';
 import { MenuItem } from '@/components/StartMenu';
 import MinesweeperApp from '@/apps/MinesweeperApp';
+import MockBrowser from '@/apps/MockBrowser';
 import ClippyWithController from '@/components/ClippyWithController';
 
 function DesktopContent() {
@@ -28,6 +29,12 @@ function DesktopContent() {
       label: 'Programs',
       icon: '📁',
       subItems: [
+        {
+          id: 'internet-explorer',
+          label: 'Internet Explorer',
+          icon: '🌐',
+          action: () => openWindow(<MockBrowser />, 'Internet Explorer')
+        },
         {
           id: 'accessories',
           label: 'Accessories',
