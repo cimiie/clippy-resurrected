@@ -379,20 +379,44 @@
     - Document required environment variables
     - _Requirements: 5.3, 14.1_
 
-- [ ] 14. Configure AWS Amplify deployment
-  - [ ] 14.1 Create Amplify configuration files
+- [x] 14. Configure AWS Amplify deployment
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  - [x] 14.1 Create Amplify configuration files
+
+
     - Create amplify.yml with build and test commands
     - Configure build phases (preBuild, build, postBuild)
     - Set up artifact output directory (.next)
     - Configure cache paths for node_modules
     - _Requirements: 16.1_
-  - [ ] 14.2 Set up environment variables for Amplify
+  - [x] 14.2 Set up environment variables for Amplify
+
+
     - Document required environment variables in README
     - Create .env.example with placeholder values
     - List AWS credentials and Bedrock configuration needed
     - Document NEXT_PUBLIC_ variables for client-side access
     - _Requirements: 16.4_
-  - [ ] 14.3 Configure Amplify build settings
+  - [x] 14.3 Configure Amplify build settings
+
+
+
+
     - Set up automatic deployments on git push
     - Configure test execution before deployment
     - Enable build failure notifications
@@ -407,7 +431,9 @@
   - [ ]* 14.6 Write property test for build failure handling
     - **Property 39: Build failures prevent deployment**
     - **Validates: Requirements 16.6**
-  - [ ] 14.7 Create deployment documentation
+  - [x] 14.7 Create deployment documentation
+
+
     - Document Amplify setup steps
     - Create deployment checklist
     - Document rollback procedures
@@ -416,3 +442,60 @@
 
 - [ ] 15. Final checkpoint - Ensure all tests pass
   - Ensure all tests pass, ask the user if questions arise.
+
+
+- [x] 16. Migrate to Bedrock API keys and inference profiles
+
+
+
+
+
+  - [x] 16.1 Update BedrockService to use Bearer token authentication
+
+
+    - Modify BedrockService constructor to accept API key parameter
+    - Remove AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY usage
+    - Implement Bearer token authentication with AWS_BEARER_TOKEN_BEDROCK
+    - Update BedrockRuntimeClient configuration for API key auth
+    - _Requirements: 17.1, 17.5_
+  - [x] 16.2 Add inference profile support to BedrockService
+
+
+    - Add setInferenceProfile method to BedrockService
+    - Update generateResponse to use inference profile ARN when configured
+    - Implement fallback to model ID if no inference profile is set
+    - Support both direct model ID and inference profile ARN in API calls
+    - _Requirements: 17.2, 17.6_
+  - [ ]* 16.3 Write property test for Bearer token authentication
+    - **Property 40: Bearer token authentication is used**
+    - **Validates: Requirements 17.1**
+  - [ ]* 16.4 Write property test for inference profile usage
+    - **Property 41: Inference profile ARN is used for requests**
+    - **Validates: Requirements 17.2, 17.6**
+  - [ ]* 16.5 Write property test for environment variable reading
+    - **Property 42: Bearer token is read from environment**
+    - **Validates: Requirements 17.5**
+  - [x] 16.6 Update environment configuration files
+
+
+    - Update .env.example with AWS_BEARER_TOKEN_BEDROCK
+    - Add BEDROCK_INFERENCE_PROFILE_ARN to .env.example
+    - Remove AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY from .env.example
+    - Update .env.local with new configuration (keep credentials secure)
+    - _Requirements: 17.1, 17.5_
+  - [x] 16.7 Update README documentation
+
+
+    - Document how to generate Bedrock API keys
+    - Explain inference profile setup and benefits
+    - Update environment variable documentation
+    - Add instructions for creating inference profiles in AWS console
+    - _Requirements: 17.1, 17.2, 17.3, 17.4_
+  - [x] 16.8 Test Bedrock API connection with new authentication
+
+
+    - Verify Bearer token authentication works
+    - Test inference profile ARN routing
+    - Confirm cross-region inference capability
+    - Validate error handling for invalid API keys
+    - _Requirements: 17.1, 17.2_

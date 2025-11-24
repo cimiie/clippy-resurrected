@@ -7,10 +7,12 @@ This directory contains service integrations for external APIs and systems.
 The `bedrock.ts` module provides integration with AWS Bedrock for LLM capabilities.
 
 ### Features
+- Bearer token authentication with Bedrock API keys
+- Inference profile support for cross-region inference
 - Token limit enforcement
 - Error handling for rate limiting and API failures
 - Context-aware prompt building
-- Support for Claude models
+- Support for Nova and Claude models
 
 ### Usage
 ```typescript
@@ -30,9 +32,9 @@ console.log(`Tokens used: ${response.tokensUsed}`);
 ### Configuration
 Set the following environment variables:
 - `AWS_REGION` - AWS region (default: us-east-1)
-- `AWS_ACCESS_KEY_ID` - AWS access key
-- `AWS_SECRET_ACCESS_KEY` - AWS secret key
-- `BEDROCK_MODEL_ID` - Model ID (default: anthropic.claude-3-sonnet-20240229-v1:0)
+- `AWS_BEARER_TOKEN_BEDROCK` - Bedrock API key for Bearer token authentication
+- `BEDROCK_MODEL_ID` - Model ID (default: amazon.nova-lite-v1:0)
+- `BEDROCK_INFERENCE_PROFILE_ARN` - (Optional) Inference profile ARN for cross-region inference
 
 ## MCP Service
 

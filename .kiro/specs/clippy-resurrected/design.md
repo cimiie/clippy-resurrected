@@ -266,12 +266,15 @@ interface BedrockService {
     context: string[],
     options: GenerationOptions
   ) => Promise<BedrockResponse>;
+  
+  // Use inference profile ARN instead of model ID for cross-region support
+  setInferenceProfile: (profileArn: string) => void;
 }
 
 interface GenerationOptions {
   maxTokens: number;
-  temperature: number;
-  topP: number;
+  temperature?: number;
+  topP?: number;
   stopSequences?: string[];
 }
 
@@ -279,6 +282,13 @@ interface BedrockResponse {
   content: string;
   tokensUsed: number;
   finishReason: string;
+}
+
+interface BedrockConfig {
+  region: string;
+  apiKey: string; // Bearer token from AWS_BEARER_TOKEN_BEDROCK
+  inferenceProfileArn?: string; // Optional inference profile ARN
+  modelId: string; // Fallback model ID if no inference profile
 }
 ```
 
@@ -496,11 +506,35 @@ The property-based testing approach will verify correctness properties that shou
 - Lazy load application components
 - Implement virtual scrolling for long Start Menu lists if needed
 
-### AWS Integration
-- Store AWS credentials securely (environment variables)
+### AWS Bedrock Integration with Inference Profiles
+
+**Authentication**:
+- Use Bedrock API keys (Bearer token) instead of IAM user credentials
+- Store API key in `AWS_BEARER_TOKEN_BEDROCK` environment variable
+- API keys provide simpler authentication without AWS credential management
+- For production, consider transitioning to short-term API keys or IAM roles
+
+**Inference Profiles**:
+- Use inference profile ARNs instead of direct model IDs for Nova Lite
+- Inference profiles enable:
+  - Cross-region inference for improved throughput and availability
+  - Cost tracking with tags for monitoring Clippy usage
+  - Usage metrics collection in CloudWatch
+  - Automatic request routing across multiple regions
+
+**Configuration**:
+- Primary model: `amazon.nova-lite-v1:0` (on-demand throughput)
+- Inference profile ARN format: `arn:aws:bedrock:region:account-id:inference-profile/profile-id`
+- Region: `ap-southeast-1` (or cross-region profile for better performance)
 - Implement request queuing for token management
 - Cache MCP documentation results to reduce API calls
 - Use streaming responses for Clippy to improve perceived performance
+
+**Implementation Details**:
+- Modify BedrockRuntimeClient to use Bearer token authentication
+- Set `Authorization: Bearer ${api-key}` header for API requests
+- Support both direct model ID and inference profile ARN
+- Fallback to model ID if inference profile is not configured
 
 ### Development Workflow
 - Husky pre-commit hooks run ESLint, TypeScript checks, and Vitest unit tests
@@ -540,11 +574,13 @@ frontend:
 ```
 
 **Environment Variables Required**:
-- `AWS_REGION`: AWS region for Bedrock
-- `AWS_ACCESS_KEY_ID`: AWS credentials for Bedrock API
-- `AWS_SECRET_ACCESS_KEY`: AWS secret key
-- `BEDROCK_MODEL_ID`: Model identifier for Claude
+- `AWS_REGION`: AWS region for Bedrock (e.g., `ap-southeast-1`)
+- `AWS_BEARER_TOKEN_BEDROCK`: Bedrock API key for Bearer token authentication
+- `BEDROCK_INFERENCE_PROFILE_ARN`: (Optional) Inference profile ARN for cross-region support
+- `BEDROCK_MODEL_ID`: Model identifier (e.g., `amazon.nova-lite-v1:0`)
 - `NEXT_PUBLIC_APP_URL`: Public application URL
+
+**Note**: `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` are no longer required when using Bedrock API keys.
 
 **Deployment Features**:
 - Automatic rollback on build failures
@@ -798,3 +834,15 @@ These hooks ensure that during development, the agent always has access to the m
 ### Property 39: Build failures prevent deployment
 *For any* build that fails tests or compilation, AWS Amplify should prevent deployment and maintain the previous working version.
 **Validates: Requirements 16.6**
+
+### Property 40: Bearer token authentication is used
+*For any* BedrockService initialization, the system should authenticate using the Bearer token from AWS_BEARER_TOKEN_BEDROCK environment variable instead of IAM user credentials.
+**Validates: Requirements 17.1**
+
+### Property 41: Inference profile ARN is used for requests
+*For any* Clippy inference request, the system should use the configured inference profile ARN instead of a direct model ID.
+**Validates: Requirements 17.2, 17.6**
+
+### Property 42: Bearer token is read from environment
+*For any* application startup, the system should successfully read the AWS_BEARER_TOKEN_BEDROCK environment variable and use it for authentication.
+**Validates: Requirements 17.5**

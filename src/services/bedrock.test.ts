@@ -11,8 +11,11 @@ vi.mock('@aws-sdk/client-bedrock-runtime', () => ({
 
 describe('BedrockService', () => {
   let service: BedrockService;
+  const mockApiKey = 'test-bearer-token-12345';
 
   beforeEach(() => {
+    // Set up environment variable for tests
+    process.env.AWS_BEARER_TOKEN_BEDROCK = mockApiKey;
     service = new BedrockService('us-east-1', 'test-model');
   });
 
@@ -42,5 +45,39 @@ describe('BedrockService', () => {
     
     expect(result).toBe(prompt);
     expect(result).not.toContain('Context:');
+  });
+
+  it('throws error when Bearer token is not provided', () => {
+    delete process.env.AWS_BEARER_TOKEN_BEDROCK;
+    
+    expect(() => {
+      new BedrockService('us-east-1', 'test-model');
+    }).toThrow('AWS_BEARER_TOKEN_BEDROCK environment variable is required for authentication');
+  });
+
+  it('accepts API key as constructor parameter', () => {
+    delete process.env.AWS_BEARER_TOKEN_BEDROCK;
+    const customApiKey = 'custom-api-key-67890';
+    
+    expect(() => {
+      new BedrockService('us-east-1', 'test-model', customApiKey);
+    }).not.toThrow();
+  });
+
+  it('sets inference profile ARN', () => {
+    const profileArn = 'arn:aws:bedrock:us-east-1:123456789012:inference-profile/test-profile';
+    service.setInferenceProfile(profileArn);
+    
+    // Verify the profile was set by checking the private property
+    expect((service as any).inferenceProfileArn).toBe(profileArn);
+  });
+
+  it('reads inference profile ARN from environment variable', () => {
+    const profileArn = 'arn:aws:bedrock:us-east-1:123456789012:inference-profile/env-profile';
+    process.env.BEDROCK_INFERENCE_PROFILE_ARN = profileArn;
+    
+    const newService = new BedrockService('us-east-1', 'test-model');
+    
+    expect((newService as any).inferenceProfileArn).toBe(profileArn);
   });
 });

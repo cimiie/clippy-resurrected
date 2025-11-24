@@ -44,8 +44,9 @@ frontend:
 - None for basic deployment
 - Add AWS Bedrock credentials when Clippy feature is implemented:
   - `AWS_REGION`
-  - `AWS_ACCESS_KEY_ID` (use Amplify secrets)
-  - `AWS_SECRET_ACCESS_KEY` (use Amplify secrets)
+  - `AWS_BEARER_TOKEN_BEDROCK` (use Amplify secrets)
+  - `BEDROCK_MODEL_ID` (optional, defaults to amazon.nova-lite-v1:0)
+  - `BEDROCK_INFERENCE_PROFILE_ARN` (optional, for cross-region inference)
 
 **Next.js 16 Specific:**
 - No special environment variables needed for Turbopack

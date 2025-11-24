@@ -20,6 +20,8 @@ This document specifies the requirements for Clippy Resurrected, a browser-based
 - **MCPServer**: A Model Context Protocol server that provides access to external documentation and services
 - **Vitest**: A fast unit testing framework for TypeScript and React components
 - **AWSAmplify**: AWS hosting and deployment platform for web applications
+- **InferenceProfile**: An AWS Bedrock resource that defines a model and Regions for routing inference requests, enabling cost tracking and cross-region throughput
+- **OnDemandThroughput**: AWS Bedrock pricing model that charges per request without requiring provisioned capacity
 
 ## Requirements
 
@@ -217,3 +219,16 @@ This document specifies the requirements for Clippy Resurrected, a browser-based
 4. WHEN environment variables are needed THEN the AWSAmplify SHALL securely store and inject AWS credentials and API keys
 5. WHEN the application is deployed THEN the AWSAmplify SHALL provide a public URL with HTTPS enabled
 6. WHEN build failures occur THEN the AWSAmplify SHALL prevent deployment and notify developers of the errors
+
+### Requirement 17
+
+**User Story:** As a developer, I want to use AWS Bedrock API keys with inference profiles for Nova Lite on-demand throughput, so that I can authenticate without IAM user credentials, track costs, and improve throughput with cross-region inference.
+
+#### Acceptance Criteria
+
+1. WHEN the BedrockService is initialized THEN the Win95Emulator SHALL authenticate using a Bedrock API key via Bearer token instead of IAM user credentials
+2. WHEN ClippyAssistant makes an inference request THEN the Win95Emulator SHALL use an InferenceProfile ARN for the Nova Lite model with OnDemandThroughput
+3. WHEN using InferenceProfiles THEN the Win95Emulator SHALL support cross-region inference to increase throughput and handle traffic bursts
+4. WHEN InferenceProfiles are configured THEN the Win95Emulator SHALL tag the profile with cost allocation tags for tracking Clippy usage costs
+5. WHEN the Bedrock API key is configured THEN the Win95Emulator SHALL store the key securely in environment variables as AWS_BEARER_TOKEN_BEDROCK
+6. WHEN inference requests are made THEN the Win95Emulator SHALL route requests through the InferenceProfile to enable usage metrics collection in CloudWatch

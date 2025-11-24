@@ -2,8 +2,6 @@
 
 import { useState, useEffect, useRef } from 'react';
 import styles from './ClippyAssistant.module.css';
-import { getBedrockService } from '@/services/bedrock';
-import { getMCPService } from '@/services/mcp';
 
 export interface ChatMessage {
   id: string;
@@ -27,9 +25,6 @@ export default function ClippyAssistant({
   const [isTyping, setIsTyping] = useState(false);
   const [animation, setAnimation] = useState<'idle' | 'thinking' | 'speaking'>('idle');
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const bedrockService = getBedrockService();
-  const mcpService = getMCPService();
 
   // Idle animation cycle
   useEffect(() => {
@@ -72,21 +67,25 @@ export default function ClippyAssistant({
     setAnimation('thinking');
 
     try {
-      // Query MCP for AWS documentation context
-      const docResults = await mcpService.queryDocumentation(userMessage.content);
-      const context = docResults.map((doc) => `${doc.title}\n${doc.content}`);
-
-      // Generate response using Bedrock
+      // Call the API route instead of calling Bedrock directly
       setAnimation('speaking');
-      const response = await bedrockService.generateResponse(
-        userMessage.content,
-        context,
-        {
+      const apiResponse = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: userMessage.content,
           maxTokens: maxResponseLength,
-          temperature: 0.7,
-          topP: 0.9,
-        }
-      );
+        }),
+      });
+
+      if (!apiResponse.ok) {
+        const errorData = await apiResponse.json();
+        throw new Error(errorData.error || 'Failed to get response');
+      }
+
+      const response = await apiResponse.json();
 
       // Track token usage
       if (onTokenUsage) {
