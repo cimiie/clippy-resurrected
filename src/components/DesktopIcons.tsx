@@ -7,6 +7,7 @@ import MinesweeperApp from '@/apps/MinesweeperApp';
 import MockBrowser from '@/apps/MockBrowser';
 import NotepadApp from '@/apps/NotepadApp';
 import DoomApp from '@/apps/DoomApp';
+import MyComputer from '@/apps/MyComputer';
 import styles from './DesktopIcons.module.css';
 
 interface IconData {
@@ -20,6 +21,13 @@ export default function DesktopIcons() {
   const [selectedIconId, setSelectedIconId] = useState<string | null>(null);
   const { openWindow } = useWindowManager();
 
+  const handleLaunchApp = (appId: string) => {
+    const icon = icons.find((i) => i.id === appId);
+    if (icon) {
+      icon.action();
+    }
+  };
+
   const icons: IconData[] = [
     {
       id: 'my-computer',
@@ -27,11 +35,9 @@ export default function DesktopIcons() {
       iconImage: '💻',
       action: () => {
         openWindow(
-          <div style={{ padding: '20px' }}>
-            <h2>My Computer</h2>
-            <p>System information and drives would appear here.</p>
-          </div>,
-          'My Computer'
+          <MyComputer onLaunchApp={handleLaunchApp} />,
+          'My Computer',
+          { width: 600, height: 450 }
         );
       },
     },

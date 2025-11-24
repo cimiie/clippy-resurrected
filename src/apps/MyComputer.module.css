@@ -1,0 +1,119 @@
+.explorer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #c0c0c0;
+  font-family: 'MS Sans Serif', Tahoma, Arial, sans-serif;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  background-color: #c0c0c0;
+  border-bottom: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+}
+
+.navButton {
+  width: 24px;
+  height: 22px;
+  background-color: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  cursor: pointer;
+  font-family: 'MS Sans Serif', Tahoma, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: #000000;
+}
+
+.navButton:hover:not(:disabled) {
+  background-color: #d4d4d4;
+}
+
+.navButton:active:not(:disabled) {
+  border-color: #808080 #ffffff #ffffff #808080;
+  padding-top: 2px;
+  padding-left: 2px;
+}
+
+.navButton:disabled {
+  color: #808080;
+  cursor: default;
+}
+
+.addressBar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+
+.addressLabel {
+  font-size: 11px;
+  color: #000000;
+}
+
+.addressInput {
+  flex: 1;
+  height: 20px;
+  padding: 2px 4px;
+  border: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+  background-color: #ffffff;
+  font-family: 'MS Sans Serif', Tahoma, Arial, sans-serif;
+  font-size: 11px;
+  color: #000000;
+}
+
+.content {
+  flex: 1;
+  overflow: auto;
+  background-color: #ffffff;
+  padding: 8px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 16px;
+  align-content: start;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.item:hover {
+  background-color: #e0e0e0;
+}
+
+.icon {
+  font-size: 32px;
+  margin-bottom: 4px;
+}
+
+.label {
+  font-size: 11px;
+  text-align: center;
+  word-wrap: break-word;
+  max-width: 80px;
+  color: #000000;
+}
+
+.statusBar {
+  padding: 2px 4px;
+  background-color: #c0c0c0;
+  border-top: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  font-size: 11px;
+  color: #000000;
+}
