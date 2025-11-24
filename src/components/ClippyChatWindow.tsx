@@ -11,6 +11,7 @@ interface ClippyChatWindowProps {
   onClose: () => void;
   onSubmit: (message: string) => void;
   onQuickAction: (actionId: string) => void;
+  position: { x: number; y: number };
 }
 
 export default function ClippyChatWindow({
@@ -19,6 +20,7 @@ export default function ClippyChatWindow({
   onClose,
   onSubmit,
   onQuickAction,
+  position,
 }: ClippyChatWindowProps) {
   const [inputValue, setInputValue] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -39,7 +41,13 @@ export default function ClippyChatWindow({
   };
 
   return (
-    <div className={styles.chatWindow}>
+    <div 
+      className={styles.chatWindow}
+      style={{
+        left: `${position.x}px`,
+        top: `${position.y}px`,
+      }}
+    >
       <div className={styles.chatTitleBar}>
         <span className={styles.chatTitle}>Clippy - Intelligent Assistant</span>
         <button

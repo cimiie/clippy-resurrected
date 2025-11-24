@@ -1,8 +1,7 @@
 .clippyContainer {
   position: fixed;
-  bottom: 40px;
-  right: 20px;
   z-index: 10000;
+  user-select: none;
 }
 
 .clippy {
@@ -62,9 +61,7 @@
 
 /* Chat Window */
 .chatWindow {
-  position: absolute;
-  bottom: 90px;
-  right: 0;
+  position: fixed;
   width: 350px;
   height: 450px;
   background: #c0c0c0;
@@ -74,6 +71,7 @@
   display: flex;
   flex-direction: column;
   font-family: 'MS Sans Serif', Tahoma, Arial, sans-serif;
+  pointer-events: auto;
 }
 
 .chatTitleBar {
