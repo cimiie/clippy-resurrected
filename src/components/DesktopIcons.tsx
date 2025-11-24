@@ -37,8 +37,18 @@ export default function DesktopIcons() {
       action: () => {
         openWindow(
           <MyComputer onLaunchApp={handleLaunchApp} />,
-          'My Computer',
-          { width: 600, height: 450 }
+          'My Computer'
+        );
+      },
+    },
+    {
+      id: 'my-documents',
+      label: 'My Documents',
+      iconImage: '📄',
+      action: () => {
+        openWindow(
+          <MyComputer onLaunchApp={handleLaunchApp} initialPath="C:\\My Documents" />,
+          'My Documents'
         );
       },
     },
@@ -85,10 +95,7 @@ export default function DesktopIcons() {
       label: 'DOOM',
       iconImage: '👹',
       action: () => {
-        openWindow(<DoomApp onClose={() => {}} />, 'DOOM', {
-          width: 640,
-          height: 480,
-        });
+        openWindow(<DoomApp onClose={() => {}} />, 'DOOM');
       },
     },
     {
@@ -96,10 +103,7 @@ export default function DesktopIcons() {
       label: 'Kiro',
       iconImage: '💻',
       action: () => {
-        openWindow(<Kiro />, 'Kiro', {
-          width: 900,
-          height: 600,
-        });
+        openWindow(<Kiro />, 'Kiro');
       },
     },
   ];

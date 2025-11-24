@@ -2,6 +2,9 @@
 
 import { useState, useMemo } from 'react';
 import { useFileSystem } from '@/contexts/FileSystemContext';
+import { useWindowManager } from '@/contexts/WindowManagerContext';
+import NotepadApp from './NotepadApp';
+import MockBrowser from './MockBrowser';
 import styles from './MyComputer.module.css';
 
 interface FileSystemItem {
@@ -92,12 +95,14 @@ const getBaseFileSystem = (): FileSystemItem[] => [
 
 interface MyComputerProps {
   onLaunchApp?: (appName: string) => void;
+  initialPath?: string;
 }
 
-export default function MyComputer({ onLaunchApp }: MyComputerProps) {
-  const { listFiles } = useFileSystem();
-  const [currentPath, setCurrentPath] = useState<string>('');
-  const [pathHistory, setPathHistory] = useState<string[]>(['']);
+export default function MyComputer({ onLaunchApp, initialPath = '' }: MyComputerProps) {
+  const { listFiles, getFile } = useFileSystem();
+  const { openWindow } = useWindowManager();
+  const [currentPath, setCurrentPath] = useState<string>(initialPath);
+  const [pathHistory, setPathHistory] = useState<string[]>([initialPath]);
   const [historyIndex, setHistoryIndex] = useState(0);
 
   // Build file system with virtual files
@@ -172,18 +177,40 @@ export default function MyComputer({ onLaunchApp }: MyComputerProps) {
   const handleItemClick = (item: FileSystemItem) => {
     if (item.type === 'folder' || item.type === 'drive') {
       navigate(item.path);
-    } else if (item.type === 'file' && item.name.endsWith('.exe')) {
-      // Launch the application
-      if (onLaunchApp) {
-        const appMap: Record<string, string> = {
-          'iexplore.exe': 'internet-explorer',
-          'notepad.exe': 'notepad',
-          'minesweeper.exe': 'minesweeper',
-          'doom.exe': 'doom',
-        };
-        const appId = appMap[item.name];
-        if (appId) {
-          onLaunchApp(appId);
+    } else if (item.type === 'file') {
+      // Handle .exe files
+      if (item.name.endsWith('.exe')) {
+        if (onLaunchApp) {
+          const appMap: Record<string, string> = {
+            'iexplore.exe': 'internet-explorer',
+            'notepad.exe': 'notepad',
+            'minesweeper.exe': 'minesweeper',
+            'doom.exe': 'doom',
+          };
+          const appId = appMap[item.name];
+          if (appId) {
+            onLaunchApp(appId);
+          }
+        }
+      }
+      // Handle .txt files - open in Notepad
+      else if (item.name.endsWith('.txt')) {
+        const file = getFile(item.path);
+        if (file) {
+          openWindow(
+            <NotepadApp initialContent={file.content} initialFilename={file.name} />,
+            `Notepad - ${file.name}`
+          );
+        }
+      }
+      // Handle .html files - open in Internet Explorer
+      else if (item.name.endsWith('.html') || item.name.endsWith('.htm')) {
+        const file = getFile(item.path);
+        if (file) {
+          openWindow(
+            <MockBrowser initialContent={file.content} initialFilename={file.name} />,
+            'Internet Explorer'
+          );
         }
       }
     }

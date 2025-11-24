@@ -5,6 +5,8 @@ import styles from './MockBrowser.module.css';
 
 interface MockBrowserProps {
   initialUrl?: string;
+  initialContent?: string;
+  initialFilename?: string;
 }
 
 interface BrowserState {
@@ -218,10 +220,13 @@ const getAWSPages = (onNavigate: (url: string) => void): Record<string, { title:
   },
 });
 
-export default function MockBrowser({ initialUrl = 'aws://home' }: MockBrowserProps) {
+export default function MockBrowser({ initialUrl = 'aws://home', initialContent, initialFilename }: MockBrowserProps) {
+  // If HTML content is provided, use file:// URL
+  const startUrl = initialContent ? `file:///${initialFilename || 'document.html'}` : initialUrl;
+  
   const [state, setState] = useState<BrowserState>({
-    currentUrl: initialUrl,
-    history: [initialUrl],
+    currentUrl: startUrl,
+    history: [startUrl],
     historyIndex: 0,
     isLoading: false,
   });
@@ -290,16 +295,30 @@ export default function MockBrowser({ initialUrl = 'aws://home' }: MockBrowserPr
 
   // Get current page content with navigation handler
   const AWS_PAGES = getAWSPages(navigate);
-  const currentPage = AWS_PAGES[state.currentUrl] || {
-    title: '404 Not Found - Internet Explorer',
-    content: (
-      <div className={styles.page}>
-        <h1>404 - Page Not Found</h1>
-        <p>The page you are looking for does not exist.</p>
-        <p><a href="aws://home">Go to AWS Home</a></p>
-      </div>
-    ),
-  };
+  
+  // If viewing a file:// URL and we have content, render it
+  let currentPage;
+  if (state.currentUrl.startsWith('file:///') && initialContent) {
+    currentPage = {
+      title: `${initialFilename || 'Document'} - Internet Explorer`,
+      content: (
+        <div className={styles.page}>
+          <div dangerouslySetInnerHTML={{ __html: initialContent }} />
+        </div>
+      ),
+    };
+  } else {
+    currentPage = AWS_PAGES[state.currentUrl] || {
+      title: '404 Not Found - Internet Explorer',
+      content: (
+        <div className={styles.page}>
+          <h1>404 - Page Not Found</h1>
+          <p>The page you are looking for does not exist.</p>
+          <p><a href="aws://home" onClick={(e) => { e.preventDefault(); navigate('aws://home'); }}>Go to AWS Home</a></p>
+        </div>
+      ),
+    };
+  }
 
   const canGoBack = state.historyIndex > 0;
   const canGoForward = state.historyIndex < state.history.length - 1;

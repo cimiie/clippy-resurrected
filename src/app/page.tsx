@@ -55,7 +55,7 @@ function DesktopContent() {
           id: 'kiro',
           label: 'Kiro',
           icon: '💻',
-          action: () => openWindow(<Kiro />, 'Kiro', { width: 900, height: 600 })
+          action: () => openWindow(<Kiro />, 'Kiro')
         },
         {
           id: 'games',
@@ -72,7 +72,7 @@ function DesktopContent() {
               id: 'doom',
               label: 'DOOM',
               icon: '👹',
-              action: () => openWindow(<DoomApp onClose={() => {}} />, 'DOOM', { width: 640, height: 480 })
+              action: () => openWindow(<DoomApp onClose={() => {}} />, 'DOOM')
             }
           ]
         }

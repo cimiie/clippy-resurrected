@@ -13,15 +13,16 @@ export interface NotepadState {
 
 interface NotepadAppProps {
   initialContent?: string;
+  initialFilename?: string;
   onStateChange?: (state: NotepadState) => void;
 }
 
 type DialogType = 'none' | 'about' | 'find' | 'goto' | 'font' | 'save';
 
-export default function NotepadApp({ initialContent = '', onStateChange }: NotepadAppProps) {
+export default function NotepadApp({ initialContent = '', initialFilename = 'Untitled', onStateChange }: NotepadAppProps) {
   const { saveFile } = useFileSystem();
   const [content, setContent] = useState(initialContent);
-  const [filename, setFilename] = useState('Untitled');
+  const [filename, setFilename] = useState(initialFilename);
   const [isModified, setIsModified] = useState(false);
   const [wordWrap, setWordWrap] = useState(false);
   const [statusBar, setStatusBar] = useState(true);
