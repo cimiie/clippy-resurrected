@@ -5,7 +5,7 @@
 - **Framework**: Next.js 15 with App Router
 - **Language**: TypeScript 5.7 (strict mode enabled)
 - **Runtime**: Node.js 18+
-- **UI Libraries**: React95, 98.css for authentic Windows 95 styling
+- **UI Libraries**: 98.css for authentic Windows 95 styling, CSS modules for components
 - **Testing**: Vitest with @testing-library/react and jsdom
 - **Code Quality**: ESLint (Next.js config), Prettier, Husky git hooks
 - **Deployment**: AWS Amplify

@@ -1,0 +1,253 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #c0c0c0;
+  font-family: 'MS Sans Serif', Arial, sans-serif;
+  overflow: hidden;
+}
+
+.menuBar {
+  display: flex;
+  background: #c0c0c0;
+  border-bottom: 1px solid #808080;
+  padding: 2px 0;
+  position: relative;
+  z-index: 100;
+}
+
+.menuItem {
+  position: relative;
+  display: inline-block;
+}
+
+.menuButton {
+  padding: 4px 8px;
+  background: transparent;
+  border: none;
+  font-family: 'MS Sans Serif', Arial, sans-serif;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.menuButton:hover {
+  background: #000080;
+  color: white;
+}
+
+.menuButton:active {
+  background: #000080;
+  color: white;
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% - 2px);
+  left: 0;
+  background: #c0c0c0;
+  border: 2px outset #ffffff;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.4);
+  min-width: 150px;
+  z-index: 1000;
+  margin-top: 0;
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 20px 4px 8px;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  font-family: 'MS Sans Serif', Arial, sans-serif;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.dropdownItem:hover:not(:disabled) {
+  background: #000080;
+  color: white;
+}
+
+.dropdownItem:disabled {
+  color: #808080;
+  cursor: default;
+}
+
+.dropdownSeparator {
+  height: 1px;
+  background: #808080;
+  margin: 2px 0;
+}
+
+.mainContent {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
+.workArea {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.toolBox {
+  width: 54px;
+  background: #c0c0c0;
+  border-right: 2px solid #808080;
+  padding: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.toolGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+}
+
+.toolButton {
+  padding: 2px;
+  font-size: 14px;
+  min-height: 23px;
+  border: 2px outset #ffffff;
+  background: #c0c0c0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toolButton:hover {
+  background: #dfdfdf;
+}
+
+.toolButton:active,
+.toolButton.active {
+  border: 2px inset #ffffff;
+  background: #c0c0c0;
+}
+
+.lineWidthBox {
+  margin-top: 4px;
+  padding: 3px;
+  background: #fff;
+  border: 2px inset #dfdfdf;
+}
+
+.lineWidthOption {
+  height: 14px;
+  margin-bottom: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 2px;
+}
+
+.lineWidthOption.selected {
+  background: #000080;
+}
+
+.lineWidthBar {
+  width: 100%;
+}
+
+.lineWidthBar.selected {
+  background: #fff;
+}
+
+.canvasArea {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.canvasScroll {
+  flex: 1;
+  overflow: auto;
+  background: #808080;
+  padding: 4px;
+}
+
+.canvas {
+  border: 1px solid #000;
+  background: #fff;
+  display: block;
+}
+
+.statusBar {
+  background: #c0c0c0;
+  border-top: 2px solid #fff;
+  padding: 2px 4px;
+  display: flex;
+  gap: 8px;
+  font-size: 11px;
+}
+
+.statusItem {
+  border: 1px inset #808080;
+  padding: 1px 4px;
+}
+
+.statusItemFlex {
+  flex: 1;
+}
+
+.colorPalette {
+  background: #c0c0c0;
+  padding: 4px;
+  border-top: 2px solid #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.colorDisplay {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  margin-right: 4px;
+}
+
+.colorPrimary {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 26px;
+  height: 26px;
+  border: 2px outset #fff;
+  z-index: 2;
+}
+
+.colorSecondary {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 26px;
+  height: 26px;
+  border: 2px outset #fff;
+  z-index: 1;
+}
+
+.colorGrid {
+  display: grid;
+  grid-template-columns: repeat(14, 1fr);
+  gap: 2px;
+  flex: 1;
+}
+
+.colorSwatch {
+  width: 18px;
+  height: 18px;
+  border: 1px solid #000;
+  cursor: pointer;
+}
+
+.colorSwatch.selected {
+  box-shadow: inset 0 0 0 2px #fff;
+}

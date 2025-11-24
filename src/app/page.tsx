@@ -10,6 +10,7 @@ import MinesweeperApp from '@/apps/MinesweeperApp';
 import MockBrowser from '@/apps/MockBrowser';
 import DoomApp from '@/apps/DoomApp';
 import Kiro from '@/apps/Kiro';
+import Paint from '@/apps/Paint';
 import ClippyWithController from '@/components/ClippyWithController';
 import ErrorBoundary from '@/components/ErrorBoundary';
 
@@ -48,6 +49,12 @@ function DesktopContent() {
               label: 'Notepad',
               icon: '📝',
               action: () => console.log('Launch Notepad')
+            },
+            {
+              id: 'paint',
+              label: 'Paint',
+              icon: '🎨',
+              action: () => openWindow(<Paint onClose={() => {}} />, 'Paint')
             }
           ]
         },

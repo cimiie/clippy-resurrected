@@ -488,9 +488,10 @@ The property-based testing approach will verify correctness properties that shou
 ## Implementation Notes
 
 ### Styling Approach
-- Use React95 components as primary UI building blocks
-- Apply 98.css for additional authentic styling
-- Create custom CSS modules for components not covered by libraries
+- Use CSS modules for all component styling
+- Apply 98.css for base Windows 95 styling
+- Follow patterns from Notepad and Paint apps for consistent UI
+- No external UI component libraries (React95 removed)
 - Maintain Windows 95 color palette (#C0C0C0, #FFFFFF, #808080)
 - Use CSS Grid for desktop icon layout
 - Implement 3D button effects with box-shadow

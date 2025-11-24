@@ -16,7 +16,7 @@ A nostalgic browser-based Windows 95 emulator built with Next.js 16, TypeScript,
 - **Framework**: Next.js 16.0.3 with App Router (Turbopack enabled)
 - **Language**: TypeScript 5.7 (strict mode)
 - **Runtime**: React 19.2.0 with React Compiler
-- **UI Libraries**: React95, 98.css
+- **UI Libraries**: 98.css for authentic Windows 95 styling
 - **Testing**: Vitest with @testing-library/react
 - **Code Quality**: ESLint, Prettier, Husky
 - **Deployment**: AWS Amplify

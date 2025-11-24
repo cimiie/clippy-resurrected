@@ -9,6 +9,7 @@ import NotepadApp from '@/apps/NotepadApp';
 import DoomApp from '@/apps/DoomApp';
 import MyComputer from '@/apps/MyComputer';
 import Kiro from '@/apps/Kiro';
+import Paint from '@/apps/Paint';
 import styles from './DesktopIcons.module.css';
 
 interface IconData {
@@ -104,6 +105,14 @@ export default function DesktopIcons() {
       iconImage: '💻',
       action: () => {
         openWindow(<Kiro />, 'Kiro');
+      },
+    },
+    {
+      id: 'paint',
+      label: 'Paint',
+      iconImage: '🎨',
+      action: () => {
+        openWindow(<Paint onClose={() => {}} />, 'Paint');
       },
     },
   ];
