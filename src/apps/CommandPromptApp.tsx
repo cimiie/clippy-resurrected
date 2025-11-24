@@ -12,7 +12,7 @@ interface CommandHistory {
 export default function CommandPromptApp() {
   const { listFiles, getFile, deleteFile } = useFileSystem();
   const [history, setHistory] = useState<CommandHistory[]>([
-    { command: '', output: ['Microsoft(R) Windows 95', '   (C)Copyright Microsoft Corp 1981-1995.', ''] }
+    { command: '', output: ['Kiro 97', '   (C)Copyright Kiro Corp 1997.', ''] }
   ]);
   const [currentCommand, setCurrentCommand] = useState('');
   const [currentPath, setCurrentPath] = useState('C:\\WINDOWS');
@@ -63,7 +63,7 @@ export default function CommandPromptApp() {
         output = handleHelp();
         break;
       case 'ver':
-        output = ['Microsoft Windows 95 [Version 4.00.950]'];
+        output = ['Kiro 97 [Version 1.0.0]'];
         break;
       case 'date':
         output = [`Current date is: ${new Date().toLocaleDateString()}`];

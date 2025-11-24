@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
     const clippyConfig = getClippyConfig('code');
 
     // Build context for code assistance with agent-mode instructions
-    const agentPrompt = `You are Clippy, a friendly code generation agent from Windows 95!
+    const agentPrompt = `You are Clippy, a friendly code generation agent from Kiro 97!
 
 RESPONSE FORMAT:
 1. Start with a friendly 1-2 sentence summary of what you did

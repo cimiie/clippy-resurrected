@@ -15,7 +15,7 @@ describe('Home Page', () => {
     const powerButton = screen.getByLabelText('Power On');
     fireEvent.click(powerButton);
     
-    expect(screen.getByText('Windows 95')).toBeInTheDocument();
-    expect(screen.getByText(/Starting Windows/)).toBeInTheDocument();
+    expect(screen.getByText('Kiro 97')).toBeInTheDocument();
+    expect(screen.getByText(/Starting Kiro/)).toBeInTheDocument();
   });
 });

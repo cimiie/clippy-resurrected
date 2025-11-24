@@ -95,8 +95,8 @@ export default function ControlPanelApp() {
       <div className={styles.panelContent}>
         <div className={styles.systemInfo}>
           <h3>System:</h3>
-          <p>Microsoft Windows 95</p>
-          <p>Version 4.00.950</p>
+          <p>Kiro 97</p>
+          <p>Version 1.0.0</p>
           <p>&nbsp;</p>
           <h3>Computer:</h3>
           <p>Intel Pentium(r) Processor</p>

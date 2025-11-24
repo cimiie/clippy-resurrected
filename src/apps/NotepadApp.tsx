@@ -416,9 +416,9 @@ export default function NotepadApp({ initialContent = '', initialFilename = 'Unt
               <strong>Notepad</strong>
             </div>
             <div className={styles.aboutText}>Version 1.0</div>
-            <div className={styles.aboutText}>Windows 95 Edition</div>
+            <div className={styles.aboutText}>Kiro 97 Edition</div>
             <div className={styles.aboutText} style={{ marginTop: '12px' }}>
-              A simple text editor for Windows 95
+              A simple text editor for Kiro 97
             </div>
           </div>
           <div className={styles.dialogButtons}>
