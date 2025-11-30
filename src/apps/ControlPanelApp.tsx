@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { useSystemSettings, WallpaperOption, ColorDepth, Resolution, Theme } from '@/contexts/SystemSettingsContext';
+import { useInstalledApps, AppId } from '@/contexts/InstalledAppsContext';
+import ConfirmDialog from '@/components/ConfirmDialog';
 import styles from './ControlPanelApp.module.css';
 
 type PanelView = 'main' | 'display' | 'system' | 'sounds' | 'datetime' | 'programs' | 'mouse';
@@ -10,6 +12,7 @@ type DisplayTab = 'background' | 'appearance' | 'settings';
 export default function ControlPanelApp() {
   const [view, setView] = useState<PanelView>('main');
   const [displayTab, setDisplayTab] = useState<DisplayTab>('background');
+  const [appToRemove, setAppToRemove] = useState<{ id: AppId; name: string } | null>(null);
   const { 
     settings, 
     updateWallpaper, 
@@ -20,6 +23,7 @@ export default function ControlPanelApp() {
     updateMouseTrailLength,
     updateCursorSize
   } = useSystemSettings();
+  const { installedApps, uninstallApp } = useInstalledApps();
 
   const renderMain = () => (
     <div className={styles.iconGrid}>
@@ -30,10 +34,6 @@ export default function ControlPanelApp() {
       <button className={styles.iconButton} onClick={() => setView('system')}>
         <div className={styles.icon}>💻</div>
         <div className={styles.iconLabel}>System</div>
-      </button>
-      <button className={styles.iconButton} onClick={() => setView('sounds')}>
-        <div className={styles.icon}>🔊</div>
-        <div className={styles.iconLabel}>Sounds</div>
       </button>
       <button className={styles.iconButton} onClick={() => setView('datetime')}>
         <div className={styles.icon}>🕐</div>
@@ -46,14 +46,6 @@ export default function ControlPanelApp() {
       <button className={styles.iconButton} onClick={() => setView('mouse')}>
         <div className={styles.icon}>🖱️</div>
         <div className={styles.iconLabel}>Mouse</div>
-      </button>
-      <button className={styles.iconButton}>
-        <div className={styles.icon}>⌨️</div>
-        <div className={styles.iconLabel}>Keyboard</div>
-      </button>
-      <button className={styles.iconButton}>
-        <div className={styles.icon}>🌐</div>
-        <div className={styles.iconLabel}>Network</div>
       </button>
     </div>
   );
@@ -237,33 +229,46 @@ export default function ControlPanelApp() {
     </div>
   );
 
-  const renderDateTime = () => (
-    <div className={styles.panel}>
-      <div className={styles.panelHeader}>
-        <button className={styles.backButton} onClick={() => setView('main')}>← Back</button>
-        <h2>Date/Time Properties</h2>
-      </div>
-      <div className={styles.panelContent}>
-        <div className={styles.dateTimeGrid}>
-          <div className={styles.field}>
-            <label>Date:</label>
-            <input type="date" className={styles.input} />
-          </div>
-          <div className={styles.field}>
-            <label>Time:</label>
-            <input type="time" className={styles.input} />
-          </div>
-          <div className={styles.field}>
-            <label>Time Zone:</label>
-            <select className={styles.select}>
-              <option>(GMT-08:00) Pacific Time (US & Canada)</option>
-              <option>(GMT-05:00) Eastern Time (US & Canada)</option>
-            </select>
+  const renderDateTime = () => {
+    // Get current date/time in Melbourne timezone (UTC+10)
+    const now = new Date();
+    const melbourneTime = new Date(now.toLocaleString('en-US', { timeZone: 'Australia/Melbourne' }));
+    const dateStr = melbourneTime.toISOString().split('T')[0];
+    const timeStr = melbourneTime.toTimeString().slice(0, 5);
+
+    return (
+      <div className={styles.panel}>
+        <div className={styles.panelHeader}>
+          <button className={styles.backButton} onClick={() => setView('main')}>← Back</button>
+          <h2>Date/Time Properties</h2>
+        </div>
+        <div className={styles.panelContent}>
+          <div className={styles.dateTimeGrid}>
+            <div className={styles.field}>
+              <label>Date:</label>
+              <input type="date" className={styles.input} defaultValue={dateStr} />
+            </div>
+            <div className={styles.field}>
+              <label>Time:</label>
+              <input type="time" className={styles.input} defaultValue={timeStr} />
+            </div>
+            <div className={styles.field}>
+              <label>Time Zone:</label>
+              <select className={styles.select} defaultValue="melbourne">
+                <option value="melbourne">(GMT+10:00) Melbourne, Sydney</option>
+                <option>(GMT-08:00) Pacific Time (US & Canada)</option>
+                <option>(GMT-05:00) Eastern Time (US & Canada)</option>
+                <option>(GMT+00:00) London</option>
+                <option>(GMT+01:00) Paris, Berlin</option>
+                <option>(GMT+08:00) Singapore, Hong Kong</option>
+                <option>(GMT+09:00) Tokyo, Seoul</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   const renderPrograms = () => (
     <div className={styles.panel}>
@@ -273,24 +278,44 @@ export default function ControlPanelApp() {
       </div>
       <div className={styles.panelContent}>
         <div className={styles.programsList}>
-          <div className={styles.programItem}>
-            <div className={styles.programName}>Minesweeper</div>
-            <button className={styles.button}>Remove</button>
-          </div>
-          <div className={styles.programItem}>
-            <div className={styles.programName}>Paint</div>
-            <button className={styles.button}>Remove</button>
-          </div>
-          <div className={styles.programItem}>
-            <div className={styles.programName}>Kiro Code Editor</div>
-            <button className={styles.button}>Remove</button>
-          </div>
-          <div className={styles.programItem}>
-            <div className={styles.programName}>Internet Explorer</div>
-            <button className={styles.button}>Remove</button>
-          </div>
+          {installedApps.length === 0 ? (
+            <div className={styles.emptyMessage}>No programs installed</div>
+          ) : (
+            installedApps.map(app => (
+              <div key={app.id} className={styles.programItem}>
+                <div className={styles.programInfo}>
+                  <span className={styles.programIcon}>{app.icon}</span>
+                  <span className={styles.programName}>{app.name}</span>
+                </div>
+                <button 
+                  className={styles.button}
+                  onClick={() => setAppToRemove({ id: app.id, name: app.name })}
+                >
+                  Remove
+                </button>
+              </div>
+            ))
+          )}
         </div>
       </div>
+      {appToRemove && (
+        <ConfirmDialog
+          title="Confirm File Deletion"
+          icon="⚠️"
+          message={
+            <>
+              Are you sure you want to remove <strong>{appToRemove.name}</strong>?
+              <br /><br />
+              This will remove the program from your system.
+            </>
+          }
+          onConfirm={() => {
+            uninstallApp(appToRemove.id);
+            setAppToRemove(null);
+          }}
+          onCancel={() => setAppToRemove(null)}
+        />
+      )}
     </div>
   );
 

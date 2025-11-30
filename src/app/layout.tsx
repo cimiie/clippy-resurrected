@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import { FileSystemProvider } from '@/contexts/FileSystemContext';
 import { SystemSettingsProvider } from '@/contexts/SystemSettingsContext';
+import { InstalledAppsProvider } from '@/contexts/InstalledAppsContext';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -21,7 +22,9 @@ export default function RootLayout({
       <body>
         <ErrorBoundary>
           <SystemSettingsProvider>
-            <FileSystemProvider>{children}</FileSystemProvider>
+            <InstalledAppsProvider>
+              <FileSystemProvider>{children}</FileSystemProvider>
+            </InstalledAppsProvider>
           </SystemSettingsProvider>
         </ErrorBoundary>
       </body>

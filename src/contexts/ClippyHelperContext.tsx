@@ -1,10 +1,10 @@
 'use client';
 
-import { createContext, useContext, ReactNode, useCallback } from 'react';
+import { createContext, useContext, ReactNode, useCallback, ReactElement } from 'react';
 import ClippyQuickMenuWrapper from '@/components/ClippyQuickMenuWrapper';
 
 interface ClippyHelperContextType {
-  wrapAppWithHelper: (app: JSX.Element, appName: string) => JSX.Element;
+  wrapAppWithHelper: (app: ReactElement, appName: string) => ReactElement;
   requestHelp: (appName: string) => void;
 }
 
@@ -17,7 +17,7 @@ interface ClippyHelperProviderProps {
 }
 
 export function ClippyHelperProvider({ children, onHelpRequest, onShutdown }: ClippyHelperProviderProps) {
-  const wrapAppWithHelper = useCallback((app: JSX.Element, appName: string) => {
+  const wrapAppWithHelper = useCallback((app: ReactElement, appName: string) => {
     return (
       <ClippyQuickMenuWrapper appName={appName} onRequestHelp={onHelpRequest} onShutdown={onShutdown}>
         {app}

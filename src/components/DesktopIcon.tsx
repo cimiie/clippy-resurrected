@@ -1,6 +1,6 @@
 'use client';
 
-import { MouseEvent } from 'react';
+import { MouseEvent, CSSProperties } from 'react';
 import styles from './DesktopIcon.module.css';
 
 export interface DesktopIconProps {
@@ -11,6 +11,7 @@ export interface DesktopIconProps {
   onSelect: () => void;
   onDoubleClick: () => void;
   gridPosition: { row: number; col: number };
+  style?: CSSProperties;
 }
 
 export default function DesktopIcon({
@@ -21,6 +22,7 @@ export default function DesktopIcon({
   onSelect,
   onDoubleClick,
   gridPosition,
+  style,
 }: DesktopIconProps) {
   const handleClick = (e: MouseEvent) => {
     e.stopPropagation();
@@ -40,6 +42,7 @@ export default function DesktopIcon({
       style={{
         gridRow: gridPosition.row,
         gridColumn: gridPosition.col,
+        ...style,
       }}
       data-icon-id={id}
     >

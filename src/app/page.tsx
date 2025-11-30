@@ -26,7 +26,7 @@ const Kiro = dynamic(() => import('@/apps/Kiro'), { ssr: false });
 const Paint = dynamic(() => import('@/apps/Paint'), { ssr: false });
 const NotepadApp = dynamic(() => import('@/apps/NotepadApp'), { ssr: false });
 const CalculatorApp = dynamic(() => import('@/apps/CalculatorApp'), { ssr: false });
-const WordPadApp = dynamic(() => import('@/apps/WordPadApp'), { ssr: false });
+
 const CharacterMapApp = dynamic(() => import('@/apps/CharacterMapApp'), { ssr: false });
 const SoundRecorderApp = dynamic(() => import('@/apps/SoundRecorderApp'), { ssr: false });
 const DiskDefragmenterApp = dynamic(() => import('@/apps/DiskDefragmenterApp'), { ssr: false });
@@ -34,9 +34,12 @@ const SystemMonitorApp = dynamic(() => import('@/apps/SystemMonitorApp'), { ssr:
 const CommandPromptApp = dynamic(() => import('@/apps/CommandPromptApp'), { ssr: false });
 const ControlPanelApp = dynamic(() => import('@/apps/ControlPanelApp'), { ssr: false });
 
+import { useInstalledApps } from '@/contexts/InstalledAppsContext';
+
 function DesktopContentInner() {
   const { windows, restoreWindow, focusWindow, openWindow } = useWindowManager();
   const { wrapAppWithHelper } = useClippyHelper();
+  const { isAppInstalled } = useInstalledApps();
 
   const handleWindowClick = (windowId: string) => {
     const window = windows.find(w => w.id === windowId);
@@ -58,7 +61,13 @@ function DesktopContentInner() {
           id: 'web-finder',
           label: 'Web Finder',
           icon: '🌐',
-          action: () => openWindow(wrapAppWithHelper(<MockBrowser />, 'Web Finder'), 'Web Finder')
+          action: () => {
+            if (!isAppInstalled('browser')) {
+              alert('Web Finder has been uninstalled. Please reinstall it from Add/Remove Programs.');
+              return;
+            }
+            openWindow(wrapAppWithHelper(<MockBrowser />, 'Web Finder'), 'Web Finder');
+          }
         },
         {
           id: 'accessories',
@@ -69,37 +78,61 @@ function DesktopContentInner() {
               id: 'calc',
               label: 'Calc',
               icon: '🔢',
-              action: () => openWindow(<CalculatorApp />, 'Calc')
+              action: () => {
+                if (!isAppInstalled('calculator')) {
+                  alert('Calc has been uninstalled. Please reinstall it from Add/Remove Programs.');
+                  return;
+                }
+                openWindow(<CalculatorApp />, 'Calc');
+              }
             },
             {
-              id: 'textedit',
-              label: 'TextEdit',
+              id: 'wordwrite',
+              label: 'WordWrite',
               icon: '📝',
-              action: () => openWindow(wrapAppWithHelper(<NotepadApp />, 'TextEdit'), 'TextEdit')
+              action: () => {
+                if (!isAppInstalled('notepad')) {
+                  alert('WordWrite has been uninstalled. Please reinstall it from Add/Remove Programs.');
+                  return;
+                }
+                openWindow(wrapAppWithHelper(<NotepadApp />, 'WordWrite'), 'WordWrite');
+              }
             },
             {
               id: 'draw',
               label: 'Draw',
               icon: '🎨',
-              action: () => openWindow(<Paint />, 'Draw')
-            },
-            {
-              id: 'wordwrite',
-              label: 'WordWrite',
-              icon: '📄',
-              action: () => openWindow(<WordPadApp />, 'WordWrite')
+              action: () => {
+                if (!isAppInstalled('paint')) {
+                  alert('Draw has been uninstalled. Please reinstall it from Add/Remove Programs.');
+                  return;
+                }
+                openWindow(<Paint />, 'Draw');
+              }
             },
             {
               id: 'symbol-viewer',
               label: 'Symbol Viewer',
               icon: '🔤',
-              action: () => openWindow(<CharacterMapApp />, 'Symbol Viewer')
+              action: () => {
+                if (!isAppInstalled('charmap')) {
+                  alert('Symbol Viewer has been uninstalled. Please reinstall it from Add/Remove Programs.');
+                  return;
+                }
+                openWindow(<CharacterMapApp />, 'Symbol Viewer');
+              }
             },
             {
               id: 'audio-capture',
               label: 'Audio Capture',
               icon: '🎙️',
-              action: () => openWindow(<SoundRecorderApp />, 'Audio Capture')
+              action: () => {
+                if (!isAppInstalled('soundrecorder')) {
+                  alert('Audio Capture has been uninstalled. Please reinstall it from Add/Remove Programs.');
+                  return;
+                }
+                openWindow(<SoundRecorderApp />, 'Audio Capture');
+              }
             },
             {
               id: 'system-tools',
@@ -110,13 +143,25 @@ function DesktopContentInner() {
                   id: 'disk-optimizer',
                   label: 'Disk Optimizer',
                   icon: '💾',
-                  action: () => openWindow(<DiskDefragmenterApp />, 'Disk Optimizer')
+                  action: () => {
+                    if (!isAppInstalled('diskdefrag')) {
+                      alert('Disk Optimizer has been uninstalled. Please reinstall it from Add/Remove Programs.');
+                      return;
+                    }
+                    openWindow(<DiskDefragmenterApp />, 'Disk Optimizer');
+                  }
                 },
                 {
                   id: 'task-watcher',
                   label: 'Task Watcher',
                   icon: '📊',
-                  action: () => openWindow(<SystemMonitorApp />, 'Task Watcher')
+                  action: () => {
+                    if (!isAppInstalled('sysmonitor')) {
+                      alert('Task Watcher has been uninstalled. Please reinstall it from Add/Remove Programs.');
+                      return;
+                    }
+                    openWindow(<SystemMonitorApp />, 'Task Watcher');
+                  }
                 }
               ]
             }
@@ -126,7 +171,13 @@ function DesktopContentInner() {
           id: 'kiro-ide',
           label: 'Kiro IDE',
           icon: '💻',
-          action: () => openWindow(<Kiro />, 'Kiro IDE')
+          action: () => {
+            if (!isAppInstalled('kiro')) {
+              alert('Kiro IDE has been uninstalled. Please reinstall it from Add/Remove Programs.');
+              return;
+            }
+            openWindow(<Kiro />, 'Kiro IDE');
+          }
         },
         {
           id: 'command-shell',
@@ -143,13 +194,25 @@ function DesktopContentInner() {
               id: 'bomb-sweeper',
               label: 'Bomb Sweeper',
               icon: '💣',
-              action: () => openWindow(wrapAppWithHelper(<MinesweeperApp />, 'Bomb Sweeper'), 'Bomb Sweeper')
+              action: () => {
+                if (!isAppInstalled('minesweeper')) {
+                  alert('Bomb Sweeper has been uninstalled. Please reinstall it from Add/Remove Programs.');
+                  return;
+                }
+                openWindow(wrapAppWithHelper(<MinesweeperApp />, 'Bomb Sweeper'), 'Bomb Sweeper');
+              }
             },
             {
               id: 'gloom',
               label: 'Gloom',
               icon: '👹',
-              action: () => openWindow(wrapAppWithHelper(<DoomApp onClose={() => {}} />, 'Gloom'), 'Gloom')
+              action: () => {
+                if (!isAppInstalled('doom')) {
+                  alert('Gloom has been uninstalled. Please reinstall it from Add/Remove Programs.');
+                  return;
+                }
+                openWindow(wrapAppWithHelper(<DoomApp onClose={() => {}} />, 'Gloom'), 'Gloom');
+              }
             }
           ]
         }

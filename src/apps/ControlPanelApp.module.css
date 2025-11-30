@@ -156,8 +156,25 @@
   border: 2px inset #808080;
 }
 
+.programInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.programIcon {
+  font-size: 16px;
+}
+
 .programName {
   font-size: 11px;
+}
+
+.emptyMessage {
+  padding: 16px;
+  text-align: center;
+  font-size: 11px;
+  color: #808080;
 }
 
 .button {
