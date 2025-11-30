@@ -80,34 +80,36 @@ export default function MinesweeperApp({ difficulty = 'beginner' }: MinesweeperA
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <div className={styles.counter}>
-          {String(settings.mines - flagCount).padStart(3, '0')}
+    <div className={styles.wrapper}>
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <div className={styles.counter}>
+            {String(settings.mines - flagCount).padStart(3, '0')}
+          </div>
+          <button className={styles.resetButton} onClick={resetGame}>
+            {getFaceEmoji()}
+          </button>
+          <div className={styles.timer}>
+            {String(Math.min(timeElapsed, 999)).padStart(3, '0')}
+          </div>
         </div>
-        <button className={styles.resetButton} onClick={resetGame}>
-          {getFaceEmoji()}
-        </button>
-        <div className={styles.timer}>
-          {String(Math.min(timeElapsed, 999)).padStart(3, '0')}
+        
+        <div 
+          className={styles.grid}
+          style={{
+            gridTemplateColumns: `repeat(${settings.cols}, 1fr)`,
+            gridTemplateRows: `repeat(${settings.rows}, 1fr)`,
+          }}
+        >
+          {grid.map((row) => row.map((cell) => renderCell(cell)))}
         </div>
-      </div>
-      
-      <div 
-        className={styles.grid}
-        style={{
-          gridTemplateColumns: `repeat(${settings.cols}, 1fr)`,
-          gridTemplateRows: `repeat(${settings.rows}, 1fr)`,
-        }}
-      >
-        {grid.map((row) => row.map((cell) => renderCell(cell)))}
-      </div>
 
-      {gameStatus !== 'playing' && (
-        <div className={styles.gameOver}>
-          {gameStatus === 'won' ? 'You Win! 🎉' : 'Game Over!'}
-        </div>
-      )}
+        {gameStatus !== 'playing' && (
+          <div className={styles.gameOver}>
+            {gameStatus === 'won' ? 'You Win! 🎉' : 'Game Over!'}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
