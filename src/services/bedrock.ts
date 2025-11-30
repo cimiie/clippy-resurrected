@@ -29,14 +29,13 @@ export class BedrockService {
       throw new Error('BEDROCK_API_KEY environment variable is required for authentication');
     }
 
-    // Configure Bedrock client with Bearer token authentication
-    // Bedrock API keys use a custom credential provider that sets the Authorization header
+    // Set the AWS SDK environment variable internally so it can use bearer token auth
+    // This works around Amplify's restriction on AWS_* prefixed env vars
+    process.env.AWS_BEARER_TOKEN_BEDROCK = bearerToken;
+
+    // Configure Bedrock client with the region
     this.client = new BedrockRuntimeClient({
       region: region || process.env.BEDROCK_REGION || 'us-east-1',
-      credentials: async () => ({
-        accessKeyId: bearerToken,
-        secretAccessKey: bearerToken,
-      }),
     });
     this.modelId = modelId || process.env.BEDROCK_MODEL_ID || 'amazon.nova-lite-v1:0';
     this.inferenceProfileArn = process.env.BEDROCK_INFERENCE_PROFILE_ARN;
