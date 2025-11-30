@@ -20,7 +20,7 @@ import ShutdownScreen from '@/components/system/ShutdownScreen';
 // Dynamic imports to avoid SSR issues
 const MinesweeperApp = dynamic(() => import('@/apps/BombSweeper/BombSweeper'), { ssr: false });
 const MockBrowser = dynamic(() => import('@/apps/WebFinder/WebFinder'), { ssr: false });
-const DoomApp = dynamic(() => import('@/apps/Gloom/Gloom'), { ssr: false });
+const GloomApp = dynamic(() => import('@/apps/Gloom/Gloom'), { ssr: false });
 const Kiro = dynamic(() => import('@/apps/KiroIDE/KiroIDE'), { ssr: false });
 const Paint = dynamic(() => import('@/apps/Draw/Draw'), { ssr: false });
 const NotepadApp = dynamic(() => import('@/apps/WordWrite/WordWrite'), { ssr: false });
@@ -221,7 +221,7 @@ function DesktopContentInner({ onShutdown }: DesktopContentInnerProps) {
                   alert('Gloom has been uninstalled. Please reinstall it from Add/Remove Programs.');
                   return;
                 }
-                openWindow(wrapAppWithHelper(<DoomApp onClose={() => {}} />, 'Gloom'), 'Gloom');
+                openWindow(wrapAppWithHelper(<GloomApp onClose={() => {}} />, 'Gloom'), 'Gloom');
               }
             }
           ]

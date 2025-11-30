@@ -7,7 +7,7 @@ import { useWindowManager } from '@/contexts/WindowManagerContext';
 import { useTokenContext } from '@/contexts/TokenContext';
 import MinesweeperApp from '@/apps/BombSweeper/BombSweeper';
 import NotepadApp from '@/apps/WordWrite/WordWrite';
-import DoomApp from '@/apps/Gloom/Gloom';
+import GloomApp from '@/apps/Gloom/Gloom';
 import MockBrowser from '@/apps/WebFinder/WebFinder';
 import { QuickActionId } from '@/types/quickActions';
 
@@ -40,7 +40,7 @@ export default function ClippyWithController({
       case 'gloom-controls':
       case 'gloom-history':
       case 'gloom-tips':
-        openWindow(<DoomApp onClose={() => {}} />, 'Gloom');
+        openWindow(<GloomApp onClose={() => {}} />, 'Gloom');
         break;
       case 'browse-web':
       case 'web-tips':

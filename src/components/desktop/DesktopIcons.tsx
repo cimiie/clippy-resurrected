@@ -12,7 +12,7 @@ import styles from './DesktopIcons.module.css';
 const MinesweeperApp = dynamic(() => import('@/apps/BombSweeper/BombSweeper'), { ssr: false });
 const MockBrowser = dynamic(() => import('@/apps/WebFinder/WebFinder'), { ssr: false });
 const NotepadApp = dynamic(() => import('@/apps/WordWrite/WordWrite'), { ssr: false });
-const DoomApp = dynamic(() => import('@/apps/Gloom/Gloom'), { ssr: false });
+const GloomApp = dynamic(() => import('@/apps/Gloom/Gloom'), { ssr: false });
 const MyComputer = dynamic(() => import('@/apps/MyComputer/MyComputer'), { ssr: false });
 const Kiro = dynamic(() => import('@/apps/KiroIDE/KiroIDE'), { ssr: false });
 const Paint = dynamic(() => import('@/apps/Draw/Draw'), { ssr: false });
@@ -45,7 +45,7 @@ export default function DesktopIcons() {
       'wordwrite': () => openWindow(wrapAppWithHelper(<NotepadApp />, 'WordWrite'), 'WordWrite'),
       'web-finder': () => openWindow(wrapAppWithHelper(<MockBrowser />, 'Web Finder'), 'Web Finder'),
       'bomb-sweeper': () => openWindow(wrapAppWithHelper(<MinesweeperApp />, 'Bomb Sweeper'), 'Bomb Sweeper'),
-      'gloom': () => openWindow(wrapAppWithHelper(<DoomApp onClose={() => {}} />, 'Gloom'), 'Gloom'),
+      'gloom': () => openWindow(wrapAppWithHelper(<GloomApp onClose={() => {}} />, 'Gloom'), 'Gloom'),
       'kiro-ide': () => openWindow(<Kiro />, 'Kiro IDE'),
       'symbol-viewer': () => openWindow(<CharacterMapApp />, 'Symbol Viewer'),
       'audio-capture': () => openWindow(<SoundRecorderApp />, 'Audio Capture'),
@@ -152,7 +152,7 @@ export default function DesktopIcons() {
           alert('Gloom has been uninstalled. Please reinstall it from Add/Remove Programs.');
           return;
         }
-        openWindow(wrapAppWithHelper(<DoomApp onClose={() => {}} />, 'Gloom'), 'Gloom');
+        openWindow(wrapAppWithHelper(<GloomApp onClose={() => {}} />, 'Gloom'), 'Gloom');
       },
     },
     {
