@@ -11,11 +11,11 @@ interface ClippyQuickMenuProps {
 
 const NO_RESPONSES = [
   "Are you sure? I'm really good at helping!",
-  "Come on, just give me a chance! 😢",
+  "Come on, just give me a chance!",
   "I've been practicing my help skills all day...",
   "Fine. But you're missing out on some GREAT tips!",
-  "This is your last chance before I get upset... 😠",
-  "That's it! I'm shutting down this computer! 💥"
+  "This is your last chance before I get upset...",
+  "That's it! I'm shutting down this computer!"
 ];
 
 export default function ClippyQuickMenu({ appName, onHelp, onShutdown }: ClippyQuickMenuProps) {

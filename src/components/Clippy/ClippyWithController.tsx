@@ -12,9 +12,10 @@ import MockBrowser from '@/apps/WebFinder/WebFinder';
 interface ClippyWithControllerProps {
   helpContext?: string | null;
   onHelpContextHandled?: () => void;
+  onShutdown?: () => void;
 }
 
-export default function ClippyWithController({ helpContext, onHelpContextHandled }: ClippyWithControllerProps) {
+export default function ClippyWithController({ helpContext, onHelpContextHandled, onShutdown }: ClippyWithControllerProps) {
   const [maxResponseLength, setMaxResponseLength] = useState(1000);
   const [tokensUsed, setTokensUsed] = useState(0);
   const clippyRef = useRef<{ openChatWithContext: (context: string) => void } | null>(null);
@@ -74,6 +75,7 @@ export default function ClippyWithController({ helpContext, onHelpContextHandled
         onQuickAction={handleQuickAction}
         helpContext={helpContext}
         onHelpContextHandled={onHelpContextHandled}
+        onShutdown={onShutdown}
       />
     </>
   );

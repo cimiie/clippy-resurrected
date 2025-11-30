@@ -299,7 +299,11 @@ function DesktopContent({ onShutdown }: DesktopContentProps) {
     <ClippyHelperProvider onHelpRequest={setHelpContext} onShutdown={onShutdown}>
       <DesktopContentInner />
       <ErrorBoundary>
-        <ClippyWithController helpContext={helpContext} onHelpContextHandled={() => setHelpContext(null)} />
+        <ClippyWithController 
+          helpContext={helpContext} 
+          onHelpContextHandled={() => setHelpContext(null)}
+          onShutdown={onShutdown}
+        />
       </ErrorBoundary>
     </ClippyHelperProvider>
   );

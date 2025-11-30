@@ -5,6 +5,7 @@ import { ClippyAnimation } from '@/types/clippy';
 import { useClippyConversation } from '@/hooks/useClippyConversation';
 import ClippyCharacter from './ClippyCharacter';
 import ClippyChatWindow from './ClippyChatWindow';
+import ConfirmDialog from '../common/ConfirmDialog';
 import styles from './ClippyAssistant.module.css';
 
 interface ClippyAssistantProps {
@@ -14,6 +15,7 @@ interface ClippyAssistantProps {
   onContextChange?: (context: string) => void;
   helpContext?: string | null;
   onHelpContextHandled?: () => void;
+  onShutdown?: () => void;
 }
 
 export interface ClippyAssistantRef {
@@ -32,6 +34,7 @@ const ClippyAssistant = forwardRef<ClippyAssistantRef, ClippyAssistantProps>(({
   onContextChange,
   helpContext,
   onHelpContextHandled,
+  onShutdown,
 }, ref) => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [showIntroText, setShowIntroText] = useState(true);
@@ -48,6 +51,7 @@ const ClippyAssistant = forwardRef<ClippyAssistantRef, ClippyAssistantProps>(({
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState<Position>({ x: 0, y: 0 });
   const [hasMoved, setHasMoved] = useState(false);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -128,6 +132,44 @@ const ClippyAssistant = forwardRef<ClippyAssistantRef, ClippyAssistantProps>(({
     await generateContextualResponse(actionId);
   };
 
+  const handleConfirmDelete = () => {
+    setShowConfirmDialog(false);
+    
+    if (onShutdown) {
+      // Show "You asked for this" message briefly before shutdown
+      setIsChatOpen(false);
+      setShowIntroText(true);
+      
+      // Create a temporary message element
+      const messageDiv = document.createElement('div');
+      messageDiv.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #c0c0c0;
+        border: 2px outset #ffffff;
+        padding: 20px 40px;
+        font-family: 'MS Sans Serif', Arial, sans-serif;
+        font-size: 14px;
+        z-index: 10001;
+        box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.4);
+      `;
+      messageDiv.textContent = 'You asked for this...';
+      document.body.appendChild(messageDiv);
+      
+      // Wait 2 seconds then shutdown
+      setTimeout(() => {
+        document.body.removeChild(messageDiv);
+        onShutdown();
+      }, 2000);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setShowConfirmDialog(false);
+  };
+
   const handleMouseDown = (e: React.MouseEvent) => {
     if ((e.target as HTMLElement).closest(`.${styles.chatWindow}`)) {
       return; // Don't drag if clicking on chat window
@@ -166,9 +208,49 @@ const ClippyAssistant = forwardRef<ClippyAssistantRef, ClippyAssistantProps>(({
         x: Math.max(0, Math.min(newX, maxX)),
         y: Math.max(0, Math.min(newY, maxY)),
       });
+
+      // Check if hovering over trash icon
+      const trashIcon = document.querySelector('[data-icon-id="trash"]');
+      if (trashIcon) {
+        const rect = trashIcon.getBoundingClientRect();
+        const isOver = 
+          e.clientX >= rect.left &&
+          e.clientX <= rect.right &&
+          e.clientY >= rect.top &&
+          e.clientY <= rect.bottom;
+        
+        // Add/remove hover class
+        if (isOver) {
+          trashIcon.classList.add('clippy-hover');
+        } else {
+          trashIcon.classList.remove('clippy-hover');
+        }
+      }
     };
 
-    const handleMouseUp = () => {
+    const handleMouseUp = (e: MouseEvent) => {
+      if (isDragging) {
+        // Remove hover class from trash
+        const trashIcon = document.querySelector('[data-icon-id="trash"]');
+        if (trashIcon) {
+          trashIcon.classList.remove('clippy-hover');
+          
+          const rect = trashIcon.getBoundingClientRect();
+          const clippyX = e.clientX;
+          const clippyY = e.clientY;
+          
+          // Check if Clippy was dropped on the trash icon
+          if (
+            clippyX >= rect.left &&
+            clippyX <= rect.right &&
+            clippyY >= rect.top &&
+            clippyY <= rect.bottom
+          ) {
+            // Show confirmation dialog
+            setShowConfirmDialog(true);
+          }
+        }
+      }
       setIsDragging(false);
     };
 
@@ -181,7 +263,7 @@ const ClippyAssistant = forwardRef<ClippyAssistantRef, ClippyAssistantProps>(({
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [isDragging, dragOffset]);
+  }, [isDragging, dragOffset, onShutdown]);
 
   // Calculate chat window position based on Clippy's position and viewport edges
   const getChatWindowPosition = () => {
@@ -225,43 +307,54 @@ const ClippyAssistant = forwardRef<ClippyAssistantRef, ClippyAssistantProps>(({
   const chatPosition = getChatWindowPosition();
 
   return (
-    <div 
-      ref={containerRef}
-      className={styles.clippyContainer}
-      style={{
-        left: `${position.x}px`,
-        top: `${position.y}px`,
-        cursor: isDragging ? 'grabbing' : 'grab',
-      }}
-      onMouseDown={handleMouseDown}
-    >
-      <ClippyCharacter
-        animation={animation}
-        isTyping={isTyping}
-        onClick={handleClippyClickInternal}
-      />
-
-      {showIntroText && (
-        <div className={styles.introText}>
-          <div className={styles.introTextBubble}>
-            Hi! I&apos;m Clippy! 📎
-            <br />
-            Click me to chat or drag me around!
-          </div>
-        </div>
-      )}
-
-      {isChatOpen && (
-        <ClippyChatWindow
-          messages={messages}
+    <>
+      <div 
+        ref={containerRef}
+        className={styles.clippyContainer}
+        style={{
+          left: `${position.x}px`,
+          top: `${position.y}px`,
+          cursor: isDragging ? 'grabbing' : 'grab',
+        }}
+        onMouseDown={handleMouseDown}
+      >
+        <ClippyCharacter
+          animation={animation}
           isTyping={isTyping}
-          onClose={() => setIsChatOpen(false)}
-          onSubmit={sendMessage}
-          onQuickAction={handleQuickAction}
-          position={chatPosition}
+          onClick={handleClippyClickInternal}
+        />
+
+        {showIntroText && (
+          <div className={styles.introText}>
+            <div className={styles.introTextBubble}>
+              Hi! I&apos;m Clippy!
+              <br />
+              Click me to chat or drag me around!
+            </div>
+          </div>
+        )}
+
+        {isChatOpen && (
+          <ClippyChatWindow
+            messages={messages}
+            isTyping={isTyping}
+            onClose={() => setIsChatOpen(false)}
+            onSubmit={sendMessage}
+            onQuickAction={handleQuickAction}
+            position={chatPosition}
+          />
+        )}
+      </div>
+
+      {showConfirmDialog && (
+        <ConfirmDialog
+          title="Delete System Component"
+          message="Clippy is a required system component. Removing it will cause irreversible system damage. Are you sure you want to continue?"
+          onConfirm={handleConfirmDelete}
+          onCancel={handleCancelDelete}
         />
       )}
-    </div>
+    </>
   );
 });
 
