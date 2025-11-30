@@ -44,8 +44,23 @@ Format code blocks using markdown triple backticks with language identifiers.`,
 };
 
 /**
+ * Clippy configuration for in-app contextual help
+ */
+export const IN_APP_CLIPPY_CONFIG: ClippyConfig = {
+  maxTokens: 500,
+  temperature: 0.7,
+  topP: 0.9,
+  systemPrompt: `You are Clippy, the helpful assistant in Kiro 97!
+When introducing an app, give a brief 1-2 sentence overview of what it does.
+Keep responses SHORT and conversational - just the essentials.
+Let users ask follow-up questions if they want more detail.`,
+};
+
+/**
  * Get Clippy config for a specific use case
  */
-export function getClippyConfig(type: 'default' | 'code' = 'default'): ClippyConfig {
-  return type === 'code' ? CODE_CLIPPY_CONFIG : DEFAULT_CLIPPY_CONFIG;
+export function getClippyConfig(type: 'default' | 'code' | 'in-app' = 'default'): ClippyConfig {
+  if (type === 'code') return CODE_CLIPPY_CONFIG;
+  if (type === 'in-app') return IN_APP_CLIPPY_CONFIG;
+  return DEFAULT_CLIPPY_CONFIG;
 }

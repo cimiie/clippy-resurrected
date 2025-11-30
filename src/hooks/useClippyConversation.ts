@@ -307,6 +307,7 @@ export function useClippyConversation({
 
   return {
     messages,
+    setMessages,
     isTyping,
     currentContext,
     sendMessage,
