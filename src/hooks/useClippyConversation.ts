@@ -156,7 +156,7 @@ export function useClippyConversation({
     } finally {
       setIsTyping(false);
     }
-  }, [currentContext, messages, maxResponseLength, onTokenUsage]);
+  }, [currentContext, messages, maxResponseLength, onTokenUsage, sessionTokensUsed]);
 
   const generateContextualResponse = useCallback(async (actionId: string) => {
     setIsTyping(true);
