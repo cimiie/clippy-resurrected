@@ -9,6 +9,12 @@ import './globals.css';
 export const metadata: Metadata = {
   title: 'Kiro 97',
   description: 'A nostalgic retro OS experience in your browser',
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+  },
 };
 
 export const dynamicParams = true;
