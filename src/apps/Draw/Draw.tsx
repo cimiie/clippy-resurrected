@@ -4,7 +4,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useFileSystem } from '@/contexts/FileSystemContext';
 import styles from './Draw.module.css';
 
-type Tool = 'pencil' | 'eraser' | 'fill' | 'line' | 'rectangle' | 'circle' | 'select' | 'spray' | 'eyedropper' | 'magnifier' | 'curve' | 'polygon' | 'roundrect';
+type Tool = 'pencil' | 'eraser' | 'fill' | 'line' | 'rectangle' | 'circle' | 'spray' | 'eyedropper' | 'roundrect';
 
 export default function Paint() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -128,20 +128,85 @@ export default function Paint() {
     }
   };
 
+  const handleEyedropper = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext('2d');
+    if (!ctx || !canvas) return;
+
+    const pos = getMousePos(e);
+    const imageData = ctx.getImageData(pos.x, pos.y, 1, 1);
+    const data = imageData.data;
+    const pickedColor = `#${((1 << 24) + (data[0] << 16) + (data[1] << 8) + data[2]).toString(16).slice(1)}`;
+    setColor(pickedColor);
+  };
+
   const stopDrawing = () => {
     setIsDrawing(false);
     setTempCanvas(null);
   };
 
-  const handleFill = () => {
-    if (tool !== 'fill') return;
-
+  const floodFill = (x: number, y: number) => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d');
     if (!ctx || !canvas) return;
 
-    ctx.fillStyle = color;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+    const targetColor = getPixelColor(data, x, y, canvas.width);
+    const fillColorRgb = hexToRgb(color);
+
+    if (colorsMatch(targetColor, fillColorRgb)) return;
+
+    const stack: Array<{ x: number; y: number }> = [{ x, y }];
+    const visited = new Set<string>();
+
+    while (stack.length > 0) {
+      const point = stack.pop();
+      if (!point) continue;
+
+      const key = `${point.x},${point.y}`;
+      if (visited.has(key)) continue;
+      if (point.x < 0 || point.x >= canvas.width || point.y < 0 || point.y >= canvas.height) continue;
+
+      const currentColor = getPixelColor(data, point.x, point.y, canvas.width);
+      if (!colorsMatch(currentColor, targetColor)) continue;
+
+      visited.add(key);
+      setPixelColor(data, point.x, point.y, canvas.width, fillColorRgb);
+
+      stack.push({ x: point.x + 1, y: point.y });
+      stack.push({ x: point.x - 1, y: point.y });
+      stack.push({ x: point.x, y: point.y + 1 });
+      stack.push({ x: point.x, y: point.y - 1 });
+    }
+
+    ctx.putImageData(imageData, 0, 0);
+  };
+
+  const getPixelColor = (data: Uint8ClampedArray, x: number, y: number, width: number) => {
+    const index = (y * width + x) * 4;
+    return { r: data[index], g: data[index + 1], b: data[index + 2], a: data[index + 3] };
+  };
+
+  const setPixelColor = (data: Uint8ClampedArray, x: number, y: number, width: number, color: { r: number; g: number; b: number }) => {
+    const index = (y * width + x) * 4;
+    data[index] = color.r;
+    data[index + 1] = color.g;
+    data[index + 2] = color.b;
+    data[index + 3] = 255;
+  };
+
+  const hexToRgb = (hex: string) => {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : { r: 0, g: 0, b: 0 };
+  };
+
+  const colorsMatch = (c1: { r: number; g: number; b: number; a?: number }, c2: { r: number; g: number; b: number }) => {
+    return c1.r === c2.r && c1.g === c2.g && c1.b === c2.b;
   };
 
   const clearCanvas = () => {
@@ -356,23 +421,16 @@ export default function Paint() {
           <div className={styles.toolBox}>
             <div className={styles.toolGrid}>
               <button
-                className={`${styles.toolButton} ${tool === 'select' ? styles.active : ''}`}
-                onClick={() => setTool('select')}
-                title="Free-Form Select"
+                className={`${styles.toolButton} ${tool === 'pencil' ? styles.active : ''}`}
+                onClick={() => setTool('pencil')}
+                title="Pencil"
               >
-                ✂️
-              </button>
-              <button
-                className={`${styles.toolButton} ${tool === 'select' ? styles.active : ''}`}
-                onClick={() => setTool('select')}
-                title="Select"
-              >
-                ▭
+                ✏️
               </button>
               <button
                 className={`${styles.toolButton} ${tool === 'eraser' ? styles.active : ''}`}
                 onClick={() => setTool('eraser')}
-                title="Eraser/Color Eraser"
+                title="Eraser"
               >
                 🧹
               </button>
@@ -388,14 +446,7 @@ export default function Paint() {
                 onClick={() => setTool('eyedropper')}
                 title="Pick Color"
               >
-                💧
-              </button>
-              <button
-                className={`${styles.toolButton} ${tool === 'magnifier' ? styles.active : ''}`}
-                onClick={() => setTool('magnifier')}
-                title="Magnifier"
-              >
-                🔍
+                👁️
               </button>
               <button
                 className={`${styles.toolButton} ${tool === 'spray' ? styles.active : ''}`}
@@ -405,13 +456,6 @@ export default function Paint() {
                 💨
               </button>
               <button
-                className={`${styles.toolButton} ${tool === 'pencil' ? styles.active : ''}`}
-                onClick={() => setTool('pencil')}
-                title="Pencil"
-              >
-                ✏️
-              </button>
-              <button
                 className={`${styles.toolButton} ${tool === 'line' ? styles.active : ''}`}
                 onClick={() => setTool('line')}
                 title="Line"
@@ -419,25 +463,11 @@ export default function Paint() {
                 ╱
               </button>
               <button
-                className={`${styles.toolButton} ${tool === 'curve' ? styles.active : ''}`}
-                onClick={() => setTool('curve')}
-                title="Curve"
-              >
-                ⌒
-              </button>
-              <button
                 className={`${styles.toolButton} ${tool === 'rectangle' ? styles.active : ''}`}
                 onClick={() => setTool('rectangle')}
                 title="Rectangle"
               >
                 ▭
-              </button>
-              <button
-                className={`${styles.toolButton} ${tool === 'polygon' ? styles.active : ''}`}
-                onClick={() => setTool('polygon')}
-                title="Polygon"
-              >
-                ⬡
               </button>
               <button
                 className={`${styles.toolButton} ${tool === 'circle' ? styles.active : ''}`}
@@ -483,7 +513,10 @@ export default function Paint() {
                 height={480}
                 onMouseDown={(e) => {
                   if (tool === 'fill') {
-                    handleFill();
+                    const pos = getMousePos(e);
+                    floodFill(Math.floor(pos.x), Math.floor(pos.y));
+                  } else if (tool === 'eyedropper') {
+                    handleEyedropper(e);
                   } else {
                     startDrawing(e);
                   }
