@@ -15,7 +15,7 @@ describe('BedrockService', () => {
 
   beforeEach(() => {
     // Set up environment variable for tests
-    process.env.AWS_BEARER_TOKEN_BEDROCK = mockApiKey;
+    process.env.BEDROCK_API_KEY = mockApiKey;
     service = new BedrockService('us-east-1', 'test-model');
   });
 
@@ -48,15 +48,15 @@ describe('BedrockService', () => {
   });
 
   it('throws error when Bearer token is not provided', () => {
-    delete process.env.AWS_BEARER_TOKEN_BEDROCK;
+    delete process.env.BEDROCK_API_KEY;
     
     expect(() => {
       new BedrockService('us-east-1', 'test-model');
-    }).toThrow('AWS_BEARER_TOKEN_BEDROCK environment variable is required for authentication');
+    }).toThrow('BEDROCK_API_KEY environment variable is required for authentication');
   });
 
   it('accepts API key as constructor parameter', () => {
-    delete process.env.AWS_BEARER_TOKEN_BEDROCK;
+    delete process.env.BEDROCK_API_KEY;
     const customApiKey = 'custom-api-key-67890';
     
     expect(() => {

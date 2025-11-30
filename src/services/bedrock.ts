@@ -23,16 +23,16 @@ export class BedrockService {
   private inferenceProfileArn?: string;
 
   constructor(region?: string, modelId?: string, apiKey?: string) {
-    const bearerToken = apiKey || process.env.AWS_BEARER_TOKEN_BEDROCK;
+    const bearerToken = apiKey || process.env.BEDROCK_API_KEY;
     
     if (!bearerToken) {
-      throw new Error('AWS_BEARER_TOKEN_BEDROCK environment variable is required for authentication');
+      throw new Error('BEDROCK_API_KEY environment variable is required for authentication');
     }
 
     // Configure Bedrock client with Bearer token authentication
     // Bedrock API keys use a custom credential provider that sets the Authorization header
     this.client = new BedrockRuntimeClient({
-      region: region || process.env.AWS_REGION || 'us-east-1',
+      region: region || process.env.BEDROCK_REGION || 'us-east-1',
       credentials: async () => ({
         accessKeyId: bearerToken,
         secretAccessKey: bearerToken,

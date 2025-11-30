@@ -10,7 +10,7 @@ inclusion: always
 
 ### Why Server-Side Only?
 
-1. **Security**: API keys (AWS_BEARER_TOKEN_BEDROCK) must never be exposed to the browser
+1. **Security**: API keys (BEDROCK_API_KEY) must never be exposed to the browser
 2. **Architecture**: Bedrock SDK requires Node.js runtime, cannot run in browser
 3. **Cost Control**: Server-side allows rate limiting and usage monitoring
 4. **Error Handling**: Better control over API failures and retries
@@ -127,8 +127,8 @@ const codeConfig = getClippyConfig('code');
 Required in `.env.local`:
 
 ```env
-AWS_BEARER_TOKEN_BEDROCK=your_token_here
-AWS_REGION=us-east-1
+BEDROCK_API_KEY=your_token_here
+BEDROCK_REGION=us-east-1
 BEDROCK_MODEL_ID=amazon.nova-lite-v1:0
 BEDROCK_INFERENCE_PROFILE_ARN=optional_profile_arn
 ```

@@ -31,8 +31,8 @@ console.log(`Tokens used: ${response.tokensUsed}`);
 
 ### Configuration
 Set the following environment variables:
-- `AWS_REGION` - AWS region (default: us-east-1)
-- `AWS_BEARER_TOKEN_BEDROCK` - Bedrock API key for Bearer token authentication
+- `BEDROCK_REGION` - AWS region (default: us-east-1)
+- `BEDROCK_API_KEY` - Bedrock API key for Bearer token authentication
 - `BEDROCK_MODEL_ID` - Model ID (default: amazon.nova-lite-v1:0)
 - `BEDROCK_INFERENCE_PROFILE_ARN` - (Optional) Inference profile ARN for cross-region inference
 
