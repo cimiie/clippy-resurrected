@@ -29,8 +29,9 @@ export class BedrockService {
       throw new Error('BEDROCK_API_KEY environment variable is required for authentication');
     }
 
-    // Set the AWS SDK environment variable internally so it can use bearer token auth
-    // This works around Amplify's restriction on AWS_* prefixed env vars
+    // IMPORTANT: AWS Amplify blocks environment variables with AWS_* prefix
+    // We use BEDROCK_API_KEY in .env.local and convert it here to AWS_BEARER_TOKEN_BEDROCK
+    // This allows the AWS SDK to authenticate while bypassing Amplify's restrictions
     process.env.AWS_BEARER_TOKEN_BEDROCK = bearerToken;
 
     // Configure Bedrock client with the region

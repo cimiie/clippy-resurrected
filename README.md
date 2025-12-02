@@ -58,11 +58,13 @@ Open [http://localhost:3000](http://localhost:3000)
 Create `.env.local` with:
 
 ```bash
-AWS_REGION=us-east-1
-AWS_BEARER_TOKEN_BEDROCK=your_api_key
+BEDROCK_REGION=us-east-1
+BEDROCK_API_KEY=your_api_key_here
 BEDROCK_MODEL_ID=amazon.nova-lite-v1:0
 BEDROCK_INFERENCE_PROFILE_ARN=optional_profile_arn
 ```
+
+**Important**: Use `BEDROCK_API_KEY` (not `AWS_BEARER_TOKEN_BEDROCK`) because AWS Amplify blocks `AWS_*` prefixed variables. The service handles the conversion internally.
 
 See `.env.example` for full template.
 

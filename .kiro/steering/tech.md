@@ -55,8 +55,10 @@ All AI assistant features use a centralized configuration system powered by AWS 
 
 - **NEVER** call `getBedrockService()` directly from client components
 - **ALWAYS** create API routes in `src/app/api/` for Bedrock calls
-- Environment variables (AWS_BEARER_TOKEN_BEDROCK) are only available server-side
+- Environment variables (BEDROCK_API_KEY) are only available server-side
 - Bedrock SDK cannot run in the browser
+
+**Note**: We use `BEDROCK_API_KEY` instead of `AWS_BEARER_TOKEN_BEDROCK` because AWS Amplify blocks environment variables with the `AWS_` prefix. The BedrockService internally converts this to the AWS SDK format.
 
 ### Configuration
 
