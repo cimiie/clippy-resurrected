@@ -54,12 +54,12 @@ export default function ClippyFlyout({ appName, onClose }: ClippyFlyoutProps) {
           { id: 'web-history', label: 'Browser History', icon: '📚' },
         ],
       },
-      'Bomb Sweeper': {
-        content: "Welcome to Bomb Sweeper! Clear the minefield by flagging all the bombs. Can you beat the clock?",
+      'Bomb Finder': {
+        content: "Welcome to Bomb Finder! Clear the minefield by flagging all the bombs. Can you beat the clock?",
         actions: [
           { id: 'how-to-play', label: 'How to Play', icon: '❓' },
-          { id: 'bombsweeper-tips', label: 'Strategy Tips', icon: '💡' },
-          { id: 'bombsweeper-history', label: 'Cool Facts', icon: '📚' },
+          { id: 'bombfinder-tips', label: 'Strategy Tips', icon: '💡' },
+          { id: 'bombfinder-history', label: 'Cool Facts', icon: '📚' },
         ],
       },
       'WordWrite': {

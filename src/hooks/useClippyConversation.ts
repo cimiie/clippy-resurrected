@@ -161,7 +161,7 @@ export function useClippyConversation({
       quickActions: [
         { id: 'play-gloom', label: 'Play Gloom', icon: '👹' },
         { id: 'browse-web', label: 'Browse Web', icon: '🌐' },
-        { id: 'launch-bombsweeper', label: 'Launch Bomb Sweeper', icon: '💣' },
+        { id: 'launch-bombfinder', label: 'Launch Bomb Finder', icon: '💣' },
         { id: 'launch-wordwrite', label: 'Launch WordWrite', icon: '📝' },
       ],
     };

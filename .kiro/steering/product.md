@@ -10,7 +10,7 @@ A nostalgic browser-based retro OS emulator branded as **Kiro 97** that recreate
 
 - Authentic Windows 98-style UI with draggable/resizable windows
 - Functional taskbar with Start Menu and desktop icons
-- Built-in applications including Bomb Sweeper, Kiro IDE code editor
+- Built-in applications including Bomb Finder, Kiro IDE code editor
 - AI-powered Clippy assistant using AWS Bedrock
 - Mock Internet Explorer browser with AWS content
 - Custom Kiro 97 branding with vibrant orange-to-cyan color scheme

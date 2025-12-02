@@ -12,7 +12,7 @@ A browser-based Windows 98 emulator built with Next.js, TypeScript, and React. E
 
 ### Built-in Applications
 
-- **Bomb Sweeper** - Classic minesweeper game
+- **Bomb Finder** - Classic minesweeper game
 - **Calculator** - Basic calculator
 - **Command Prompt** - Terminal emulator
 - **Control Panel** - System settings

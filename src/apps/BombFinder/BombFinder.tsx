@@ -1,7 +1,7 @@
 'use client';
 
-import { useMinesweeperLogic, Cell } from './BombSweeperGame';
-import styles from './BombSweeper.module.css';
+import { useMinesweeperLogic, Cell } from './BombFinderGame';
+import styles from './BombFinder.module.css';
 
 interface MinesweeperAppProps {
   difficulty?: 'beginner' | 'intermediate' | 'expert';

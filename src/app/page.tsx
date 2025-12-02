@@ -18,7 +18,7 @@ import LoginScreen from '@/components/system/LoginScreen';
 import ShutdownScreen from '@/components/system/ShutdownScreen';
 
 // Dynamic imports to avoid SSR issues
-const MinesweeperApp = dynamic(() => import('@/apps/BombSweeper/BombSweeper'), { ssr: false });
+const MinesweeperApp = dynamic(() => import('@/apps/BombFinder/BombFinder'), { ssr: false });
 const MockBrowser = dynamic(() => import('@/apps/WebFinder/WebFinder'), { ssr: false });
 const GloomApp = dynamic(() => import('@/apps/Gloom/Gloom'), { ssr: false });
 const Kiro = dynamic(() => import('@/apps/KiroIDE/KiroIDE'), { ssr: false });
@@ -201,15 +201,15 @@ function DesktopContentInner({ onShutdown }: DesktopContentInnerProps) {
           icon: '🎮',
           subItems: [
             {
-              id: 'bomb-sweeper',
-              label: 'Bomb Sweeper',
+              id: 'bomb-finder',
+              label: 'Bomb Finder',
               icon: '💣',
               action: () => {
                 if (!isAppInstalled('minesweeper')) {
-                  alert('Bomb Sweeper has been uninstalled. Please reinstall it from Add/Remove Programs.');
+                  alert('Bomb Finder has been uninstalled. Please reinstall it from Add/Remove Programs.');
                   return;
                 }
-                openWindow(wrapAppWithHelper(<MinesweeperApp />, 'Bomb Sweeper'), 'Bomb Sweeper');
+                openWindow(wrapAppWithHelper(<MinesweeperApp />, 'Bomb Finder'), 'Bomb Finder');
               }
             },
             {

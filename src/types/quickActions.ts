@@ -10,10 +10,10 @@ export type QuickActionId =
   | 'web-tips'
   | 'web-history'
   | 'web-features'
-  | 'launch-bombsweeper'
+  | 'launch-bombfinder'
   | 'how-to-play'
-  | 'bombsweeper-tips'
-  | 'bombsweeper-history'
+  | 'bombfinder-tips'
+  | 'bombfinder-history'
   | 'launch-wordwrite'
   | 'wordwrite-shortcuts'
   | 'wordwrite-tips'
@@ -25,7 +25,7 @@ export type QuickActionId =
 export const APP_LAUNCH_ACTIONS = {
   'Gloom': 'play-gloom',
   'Web Finder': 'browse-web',
-  'Bomb Sweeper': 'launch-bombsweeper',
+  'Bomb Finder': 'launch-bombfinder',
   'WordWrite': 'launch-wordwrite',
 } as const;
 

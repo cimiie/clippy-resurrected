@@ -5,7 +5,7 @@ import ClippyAssistant from './ClippyAssistant';
 import TokenController from '../dev/TokenController';
 import { useWindowManager } from '@/contexts/WindowManagerContext';
 import { useTokenContext } from '@/contexts/TokenContext';
-import MinesweeperApp from '@/apps/BombSweeper/BombSweeper';
+import MinesweeperApp from '@/apps/BombFinder/BombFinder';
 import NotepadApp from '@/apps/WordWrite/WordWrite';
 import GloomApp from '@/apps/Gloom/Gloom';
 import MockBrowser from '@/apps/WebFinder/WebFinder';
@@ -48,11 +48,11 @@ export default function ClippyWithController({
       case 'web-features':
         openWindow(<MockBrowser />, 'Web Finder');
         break;
-      case 'launch-bombsweeper':
+      case 'launch-bombfinder':
       case 'how-to-play':
-      case 'bombsweeper-tips':
-      case 'bombsweeper-history':
-        openWindow(<MinesweeperApp />, 'Bomb Sweeper');
+      case 'bombfinder-tips':
+      case 'bombfinder-history':
+        openWindow(<MinesweeperApp />, 'Bomb Finder');
         break;
       case 'launch-wordwrite':
       case 'wordwrite-shortcuts':

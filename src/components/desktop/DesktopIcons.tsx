@@ -9,7 +9,7 @@ import { useInstalledApps } from '@/contexts/InstalledAppsContext';
 import styles from './DesktopIcons.module.css';
 
 // Dynamic imports to avoid SSR issues
-const MinesweeperApp = dynamic(() => import('@/apps/BombSweeper/BombSweeper'), { ssr: false });
+const MinesweeperApp = dynamic(() => import('@/apps/BombFinder/BombFinder'), { ssr: false });
 const MockBrowser = dynamic(() => import('@/apps/WebFinder/WebFinder'), { ssr: false });
 const NotepadApp = dynamic(() => import('@/apps/WordWrite/WordWrite'), { ssr: false });
 const GloomApp = dynamic(() => import('@/apps/Gloom/Gloom'), { ssr: false });
@@ -44,7 +44,7 @@ export default function DesktopIcons() {
       'draw': () => openWindow(<Paint />, 'Draw'),
       'wordwrite': () => openWindow(wrapAppWithHelper(<NotepadApp />, 'WordWrite'), 'WordWrite'),
       'web-finder': () => openWindow(wrapAppWithHelper(<MockBrowser />, 'Web Finder'), 'Web Finder'),
-      'bomb-sweeper': () => openWindow(wrapAppWithHelper(<MinesweeperApp />, 'Bomb Sweeper'), 'Bomb Sweeper'),
+      'bomb-finder': () => openWindow(wrapAppWithHelper(<MinesweeperApp />, 'Bomb Finder'), 'Bomb Finder'),
       'gloom': () => openWindow(wrapAppWithHelper(<GloomApp onClose={() => {}} />, 'Gloom'), 'Gloom'),
       'kiro-ide': () => openWindow(<Kiro />, 'Kiro IDE'),
       'symbol-viewer': () => openWindow(<CharacterMapApp />, 'Symbol Viewer'),
@@ -130,16 +130,16 @@ export default function DesktopIcons() {
       },
     },
     {
-      id: 'bomb-sweeper',
+      id: 'bomb-finder',
       appId: 'minesweeper',
-      label: 'Bomb Sweeper',
+      label: 'Bomb Finder',
       iconImage: '💣',
       action: () => {
         if (!isAppInstalled('minesweeper')) {
-          alert('Bomb Sweeper has been uninstalled. Please reinstall it from Add/Remove Programs.');
+          alert('Bomb Finder has been uninstalled. Please reinstall it from Add/Remove Programs.');
           return;
         }
-        openWindow(wrapAppWithHelper(<MinesweeperApp />, 'Bomb Sweeper'), 'Bomb Sweeper');
+        openWindow(wrapAppWithHelper(<MinesweeperApp />, 'Bomb Finder'), 'Bomb Finder');
       },
     },
     {

@@ -22,7 +22,7 @@ export interface InstalledApp {
 }
 
 const ALL_APPS: InstalledApp[] = [
-  { id: 'minesweeper', name: 'Bomb Sweeper', icon: '💣' },
+  { id: 'minesweeper', name: 'Bomb Finder', icon: '💣' },
   { id: 'paint', name: 'Draw', icon: '🎨' },
   { id: 'kiro', name: 'Kiro IDE', icon: '💻' },
   { id: 'browser', name: 'Web Finder', icon: '🌐' },

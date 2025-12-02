@@ -72,7 +72,7 @@ const getBaseFileSystem = (): FileSystemItem[] => [
             icon: '📁',
             path: 'C:\\Program Files\\Games',
             children: [
-              { name: 'bombsweeper.exe', type: 'file', icon: '💣', path: 'C:\\Program Files\\Games\\bombsweeper.exe' },
+              { name: 'bombfinder.exe', type: 'file', icon: '💣', path: 'C:\\Program Files\\Games\\bombfinder.exe' },
               { name: 'gloom.exe', type: 'file', icon: '👹', path: 'C:\\Program Files\\Games\\gloom.exe' },
             ],
           },
@@ -234,7 +234,7 @@ export default function MyComputer({ onLaunchApp, initialPath = '' }: MyComputer
           const appMap: Record<string, string> = {
             'webfinder.exe': 'web-finder',
             'textedit.exe': 'textedit',
-            'bombsweeper.exe': 'bomb-sweeper',
+            'bombfinder.exe': 'bomb-finder',
             'gloom.exe': 'gloom',
             'calc.exe': 'calc',
             'draw.exe': 'draw',

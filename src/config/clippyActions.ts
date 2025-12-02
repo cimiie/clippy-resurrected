@@ -49,21 +49,21 @@ export const ACTION_CONTEXT_MAP: Record<QuickActionId, ActionContext> = {
     context: 'The user wants to learn about Web Finder features.',
     topic: 'web finder features favorites bookmarks navigation tools',
   },
-  'launch-bombsweeper': {
-    context: 'The user just opened Bomb Sweeper, a classic puzzle game.',
-    topic: 'bomb sweeper game rules strategy tips history',
+  'launch-bombfinder': {
+    context: 'The user just opened Bomb Finder, a classic puzzle game.',
+    topic: 'bomb finder game rules strategy tips history',
   },
   'how-to-play': {
-    context: 'The user wants to learn how to play Bomb Sweeper.',
-    topic: 'bomb sweeper rules gameplay instructions beginner guide',
+    context: 'The user wants to learn how to play Bomb Finder.',
+    topic: 'bomb finder rules gameplay instructions beginner guide',
   },
-  'bombsweeper-tips': {
-    context: 'The user wants advanced tips for playing Bomb Sweeper.',
-    topic: 'bomb sweeper strategy advanced techniques patterns',
+  'bombfinder-tips': {
+    context: 'The user wants advanced tips for playing Bomb Finder.',
+    topic: 'bomb finder strategy advanced techniques patterns',
   },
-  'bombsweeper-history': {
-    context: 'The user wants to know about the history of Bomb Sweeper.',
-    topic: 'bomb sweeper history origin classic puzzle game facts trivia',
+  'bombfinder-history': {
+    context: 'The user wants to know about the history of Bomb Finder.',
+    topic: 'bomb finder history origin classic puzzle game facts trivia',
   },
   'launch-wordwrite': {
     context: 'The user just opened WordWrite, a simple text editor.',
