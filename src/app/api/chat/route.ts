@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getBedrockService } from '@/services/bedrock';
 import { getClippyConfig } from '@/config/clippy';
+import { secureApiRoute } from '@/lib/security';
 
 interface ConversationMessage {
   role: 'user' | 'assistant' | 'system';
@@ -9,12 +10,23 @@ interface ConversationMessage {
 
 export async function POST(request: NextRequest) {
   try {
-    const { message, maxTokens, context, conversationHistory, sessionTokensUsed } = await request.json();
+    const payload = await request.json();
+    const { message, maxTokens, context, conversationHistory, sessionTokensUsed } = payload;
 
-    if (!message || typeof message !== 'string') {
+    // Apply security checks
+    const securityCheck = secureApiRoute(request, payload, {
+      rateLimit: { maxRequests: 20, windowMs: 60000 }, // 20 requests per minute
+      maxMessageLength: 5000,
+      maxTokens: 2000,
+    });
+
+    if (!securityCheck.allowed) {
       return NextResponse.json(
-        { error: 'Message is required' },
-        { status: 400 }
+        { error: securityCheck.error },
+        { 
+          status: securityCheck.error?.includes('Rate limit') ? 429 : 403,
+          headers: securityCheck.headers 
+        }
       );
     }
 
@@ -23,7 +35,10 @@ export async function POST(request: NextRequest) {
     if (sessionTokensUsed && sessionTokensUsed >= SESSION_LIMIT) {
       return NextResponse.json(
         { error: 'Session token limit reached. Please refresh the page to start a new session.' },
-        { status: 429 }
+        { 
+          status: 429,
+          headers: securityCheck.headers 
+        }
       );
     }
 
@@ -66,6 +81,8 @@ export async function POST(request: NextRequest) {
       content: response.content,
       tokensUsed: response.tokensUsed,
       finishReason: response.finishReason,
+    }, {
+      headers: securityCheck.headers
     });
   } catch (error) {
     console.error('Chat API error:', error);

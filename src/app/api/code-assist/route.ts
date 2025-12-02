@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getBedrockService } from '@/services/bedrock';
 import { getClippyConfig } from '@/config/clippy';
+import { secureApiRoute } from '@/lib/security';
 
 interface CodeAssistRequest {
   prompt: string;
@@ -12,12 +13,23 @@ interface CodeAssistRequest {
 
 export async function POST(request: NextRequest) {
   try {
-    const { prompt, fileName, language, code, cursorPosition }: CodeAssistRequest = await request.json();
+    const payload = await request.json();
+    const { prompt, fileName, language, code, cursorPosition }: CodeAssistRequest = payload;
 
-    if (!prompt || typeof prompt !== 'string') {
+    // Apply security checks
+    const securityCheck = secureApiRoute(request, { message: prompt }, {
+      rateLimit: { maxRequests: 30, windowMs: 60000 }, // 30 requests per minute (code assist needs more)
+      maxMessageLength: 5000,
+      maxTokens: 2000,
+    });
+
+    if (!securityCheck.allowed) {
       return NextResponse.json(
-        { error: 'Prompt is required' },
-        { status: 400 }
+        { error: securityCheck.error },
+        { 
+          status: securityCheck.error?.includes('Rate limit') ? 429 : 403,
+          headers: securityCheck.headers 
+        }
       );
     }
 
@@ -77,6 +89,8 @@ RULES:
       content: response.content,
       tokensUsed: response.tokensUsed,
       finishReason: response.finishReason,
+    }, {
+      headers: securityCheck.headers
     });
   } catch (error) {
     console.error('Code assist API error:', error);
