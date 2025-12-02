@@ -4,6 +4,9 @@ frontend:
     preBuild:
       commands:
         - npm ci
+        - env | grep -e BEDROCK_API_KEY >> .env.production
+        - env | grep -e BEDROCK_REGION >> .env.production
+        - env | grep -e BEDROCK_INFERENCE_PROFILE_ARN >> .env.production
     build:
       commands:
         - npm run test -- --run
